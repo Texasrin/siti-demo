@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Goccia Blu · Idraulico pronto intervento</title>
+<meta name="description" content="Goccia Blu, idraulico di zona con pronto intervento. Progetto dimostrativo – attività di fantasia.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0B2540">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --notte:#0B2540; --notte-2:#123456; --acqua:#1E7FD6; --acqua-chiara:#7CC4F5; --ghiaccio:#EAF4FB;
+  --bianco:#FFFFFF; --arancio:#FF7A1A; --arancio-scuro:#E06205; --testo:#16283A; --grigio:#5A6B7D;
+  --ok:#1F9D57; --raggio:20px;
+  --titoli:"Outfit",system-ui,sans-serif; --sans:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--ghiaccio);color:var(--testo);line-height:1.55;font-size:17px;overflow-x:hidden}
+svg{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:var(--titoli);font-weight:800;line-height:1.05;letter-spacing:-.02em;text-wrap:balance}
+.contenitore{width:100%;max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:68px 0}
+h2{font-size:clamp(2rem,7.5vw,3.1rem);margin:12px 0 14px}
+.etichetta{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--acqua)}
+.etichetta::before{content:"";width:10px;height:10px;background:currentColor;border-radius:50% 50% 50% 0;transform:rotate(-45deg)}
+.sottotitolo{color:var(--grigio);max-width:34em}
+
+/* ---------- Bottoni ---------- */
+.bottone{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 20px;white-space:nowrap;border-radius:16px;font-weight:700;font-size:1.02rem;text-decoration:none;border:2px solid transparent;transition:transform .2s,background .2s,box-shadow .2s}
+.bottone svg{width:22px;height:22px;flex:none}
+.bottone:active{transform:scale(.97)}
+.bottone.chiama{background:var(--arancio);color:#fff;box-shadow:0 10px 24px -10px rgba(255,122,26,.9)}
+.bottone.chiama:hover{background:var(--arancio-scuro)}
+.bottone.wa{background:#1F9D57;color:#fff;box-shadow:0 10px 24px -10px rgba(31,157,87,.8)}
+.bottone.wa:hover{background:#17804A}
+.bottone.chiaro{border-color:rgba(255,255,255,.4);color:#fff}
+.bottone.chiaro:hover{background:#fff;color:var(--notte)}
+.azioni{display:flex;flex-wrap:wrap;gap:12px}
+.azioni .bottone{flex:1 1 150px}
+
+/* ---------- Testata ---------- */
+.testata{position:absolute;top:0;left:0;right:0;z-index:5;padding:16px 0;color:#fff}
+.testata .contenitore{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--titoli);font-weight:800;font-size:1.25rem;text-decoration:none}
+.logo svg{width:30px;height:36px}
+.testata nav{display:none;gap:26px;font-weight:500;font-size:.95rem}
+.testata nav a{text-decoration:none;opacity:.85}
+.testata nav a:hover{opacity:1}
+.testata .tel-alto{font-weight:700;font-size:.95rem;text-decoration:none;display:flex;align-items:center;gap:6px}
+.testata .tel-alto svg{width:16px;height:16px}
+
+/* ---------- Apertura ---------- */
+.apertura{position:relative;background:radial-gradient(120% 80% at 80% 0%,#1B4F86 0%,var(--notte) 60%);color:#fff;padding:104px 0 0;overflow:hidden;min-height:100svh;display:flex;flex-direction:column}
+.apertura .contenitore{position:relative;z-index:2;margin-top:auto;margin-bottom:auto}
+.apertura .etichetta{color:var(--acqua-chiara)}
+.apertura h1{font-size:clamp(2.7rem,12.5vw,5.6rem);margin:14px 0 16px}
+.apertura h1 .riga{display:block;overflow:hidden;padding-bottom:.1em}
+.apertura h1 .parola{display:inline-block}
+.apertura h1 .evidenza{color:var(--arancio)}
+.apertura p.intro{color:#C9DCEE;max-width:27em;font-size:1.08rem;margin-bottom:24px}
+.stato-mini{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-size:.92rem;font-weight:500;background:rgba(255,255,255,.1);padding:8px 14px;border-radius:999px}
+.pallino{width:10px;height:10px;border-radius:50%;background:var(--arancio);flex:none;animation:battito 2s infinite;box-shadow:0 0 0 0 rgba(255,122,26,.6)}
+.aperto .pallino{background:#3DDC84;box-shadow:0 0 0 0 rgba(61,220,132,.6);animation-name:battito-verde}
+@keyframes battito{70%{box-shadow:0 0 0 9px rgba(255,122,26,0)}100%{box-shadow:0 0 0 0 rgba(255,122,26,0)}}
+@keyframes battito-verde{70%{box-shadow:0 0 0 9px rgba(61,220,132,0)}100%{box-shadow:0 0 0 0 rgba(61,220,132,0)}}
+.tubo{position:relative;z-index:1;margin-top:26px}
+.tubo svg{width:100%;height:auto}
+
+/* ---------- Numeri ---------- */
+.numeri{background:var(--bianco);padding:0}
+.numeri .contenitore{display:grid;grid-template-columns:repeat(3,1fr);text-align:center}
+.numero{padding:26px 6px;border-right:1px solid #DCE8F2}
+.numero:last-child{border-right:0}
+.numero b{display:block;font-family:var(--titoli);font-weight:800;font-size:clamp(1.9rem,8.5vw,3rem);line-height:1;color:var(--acqua)}
+.numero > span{display:block;margin-top:6px;font-size:.8rem;color:var(--grigio);line-height:1.3}
+
+/* ---------- Servizi ---------- */
+.griglia{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:32px}
+.servizio{background:var(--bianco);border-radius:var(--raggio);padding:18px 16px 20px;border:1.5px solid #DCE8F2;transition:transform .25s,box-shadow .25s,border-color .25s}
+.servizio:hover{transform:translateY(-4px);border-color:var(--acqua);box-shadow:0 20px 30px -22px rgba(11,37,64,.6)}
+.servizio .icona{width:58px;height:58px;border-radius:16px;background:var(--ghiaccio);display:grid;place-items:center;margin-bottom:14px}
+.servizio .icona svg{width:38px;height:38px}
+.servizio h3{font-size:1.12rem;margin-bottom:6px;font-weight:700;letter-spacing:-.01em}
+.servizio p{font-size:.9rem;color:var(--grigio);line-height:1.4}
+.servizio.urgente{background:var(--notte);border-color:var(--notte);color:#fff}
+.servizio.urgente p{color:#C9DCEE}
+.servizio.urgente .icona{background:rgba(255,255,255,.1)}
+.targhetta{display:inline-block;margin-top:10px;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--arancio);color:#fff;padding:4px 9px;border-radius:999px}
+
+/* ---------- Come funziona ---------- */
+.passi{background:var(--bianco)}
+.percorso{position:relative;margin-top:34px;padding-left:64px}
+.linea{position:absolute;left:23px;top:10px;bottom:10px;width:6px;border-radius:6px;background:#DCE8F2;overflow:hidden}
+.linea i{position:absolute;inset:0;background:linear-gradient(var(--acqua-chiara),var(--acqua));transform-origin:top}
+.passo{position:relative;padding-bottom:34px}
+.passo:last-child{padding-bottom:0}
+.passo .cerchio{position:absolute;left:-64px;top:0;width:52px;height:52px;border-radius:50%;background:var(--acqua);color:#fff;display:grid;place-items:center;font-family:var(--titoli);font-weight:800;font-size:1.3rem;border:5px solid var(--bianco)}
+.passo h3{font-size:1.3rem;margin-bottom:6px;padding-top:10px}
+.passo p{color:var(--grigio)}
+.promessa{margin-top:36px;background:var(--ghiaccio);border-radius:var(--raggio);padding:20px;display:flex;gap:14px;align-items:flex-start}
+.promessa svg{width:34px;height:34px;flex:none}
+.promessa b{font-family:var(--titoli);font-size:1.05rem}
+.promessa p{font-size:.92rem;color:var(--grigio)}
+
+/* ---------- Orari ---------- */
+.orari{background:var(--notte);color:#fff}
+.orari .etichetta{color:var(--acqua-chiara)}
+.orari .sottotitolo{color:#C9DCEE}
+.orari-griglia{display:grid;gap:24px;margin-top:30px}
+.cartello{background:#fff;color:var(--testo);border-radius:var(--raggio);padding:26px 22px;text-align:center}
+.cartello .grande{font-family:var(--titoli);font-weight:800;font-size:clamp(2rem,9vw,2.8rem);line-height:1.05;color:var(--arancio-scuro);display:flex;align-items:center;justify-content:center;gap:12px}
+.cartello.aperto .grande{color:var(--ok)}
+.cartello .pallino{width:14px;height:14px}
+.cartello.aperto .pallino{background:var(--ok)}
+.cartello .dettaglio{margin-top:10px;color:var(--grigio);font-weight:500}
+.cartello .urgenze{margin-top:16px;padding-top:16px;border-top:1px dashed #C9D8E6;font-size:.92rem}
+.cartello .urgenze b{color:var(--arancio-scuro)}
+.tabella{list-style:none}
+.tabella li{display:flex;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px dashed rgba(255,255,255,.2)}
+.tabella li span:last-child{text-align:right;font-variant-numeric:tabular-nums;color:#C9DCEE}
+.tabella li.oggi{color:var(--acqua-chiara);font-weight:700}
+.tabella li.oggi span:last-child{color:var(--acqua-chiara)}
+.tabella li.oggi span:first-child::after{content:"oggi";margin-left:8px;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;background:var(--acqua-chiara);color:var(--notte);padding:2px 7px;border-radius:999px;vertical-align:2px}
+
+/* ---------- Zona ---------- */
+.zona-griglia{display:grid;gap:22px;margin-top:28px}
+.mappa{border-radius:var(--raggio);overflow:hidden;background:#D6E9F7}
+.mappa svg{width:100%;height:auto}
+.onda{transform-origin:200px 150px;transform-box:view-box}
+.scheda{background:var(--bianco);border-radius:var(--raggio);padding:24px 22px;border:1.5px solid #DCE8F2}
+.scheda h3{font-size:1.5rem;margin-bottom:8px}
+.scheda address{font-style:normal;color:var(--grigio)}
+.scheda .tel{display:block;font-family:var(--titoli);font-weight:800;font-size:1.9rem;color:var(--acqua);margin:14px 0 18px;text-decoration:none}
+.comuni{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin-top:18px}
+.comuni li{font-size:.85rem;font-weight:500;background:var(--ghiaccio);padding:6px 12px;border-radius:999px}
+
+/* ---------- Piè di pagina ---------- */
+footer{background:#071A2E;color:#9FB6CC;padding:44px 0 34px;text-align:center;font-size:.9rem}
+footer .logo{justify-content:center;color:#fff;margin-bottom:10px}
+footer .dimostrativo{display:inline-block;margin-top:22px;padding:8px 16px;border:1px dashed rgba(159,182,204,.5);border-radius:999px;font-size:.8rem}
+
+/* ---------- Barra fissa ---------- */
+.barra-fissa{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid #DCE8F2;transform:translateY(110%);transition:transform .35s ease}
+.barra-fissa.visibile{transform:none}
+.barra-fissa .bottone{flex:1;min-height:52px;padding:0 12px}
+
+@media (min-width:760px){
+  body{font-size:18px}
+  section{padding:104px 0}
+  .testata nav{display:flex}
+  .apertura .azioni .bottone{flex:0 0 auto}
+  .griglia{grid-template-columns:repeat(3,1fr);gap:20px}
+  .servizio{padding:24px 22px 26px}
+  .orari-griglia{grid-template-columns:1fr 1.2fr;align-items:center;gap:60px}
+  .zona-griglia{grid-template-columns:1.3fr 1fr;align-items:stretch}
+  .numero > span{font-size:.95rem}
+  .barra-fissa{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .pallino{animation:none}
+}
+</style>
+</head>
+<body>
+
+<header class="testata">
+  <div class="contenitore">
+    <a class="logo" href="#inizio" aria-label="Goccia Blu, torna all'inizio">
+      <svg viewBox="0 0 30 36" aria-hidden="true"><path d="M15 1C9 10 3 16 3 23a12 12 0 0 0 24 0C27 16 21 10 15 1z" fill="#1E7FD6"/><path d="M9 23a6 6 0 0 0 6 6" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg>
+      Goccia Blu
+    </a>
+    <nav aria-label="Sezioni">
+      <a href="#servizi">Servizi</a>
+      <a href="#come">Come funziona</a>
+      <a href="#orari">Orari</a>
+      <a href="#zona">Zona</a>
+    </nav>
+    <a class="tel-alto" href="tel:+390200000000">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+      02 0000 0000
+    </a>
+  </div>
+</header>
+
+<main id="inizio">
+  <!-- APERTURA -->
+  <section class="apertura">
+    <div class="contenitore">
+      <span class="etichetta entra">Idraulico di zona · Pronto intervento</span>
+      <h1>
+        <span class="riga"><span class="parola">Perdita</span> <span class="parola">in</span> <span class="parola">casa?</span></span>
+        <span class="riga"><span class="parola">Arriviamo</span> <span class="parola">in</span></span>
+        <span class="riga"><span class="parola evidenza">60</span> <span class="parola evidenza">minuti.</span></span>
+      </h1>
+      <p class="intro entra">Tubi rotti, scarichi intasati, caldaia ferma. Ti diciamo il prezzo prima di iniziare e paghi solo a lavoro finito.</p>
+      <div class="azioni entra">
+        <a class="bottone chiama" href="tel:+390200000000">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+          Chiama ora
+        </a>
+        <a class="bottone chiaro" href="#servizi">Cosa facciamo</a>
+      </div>
+      <div class="entra"><span class="stato-mini" data-stato-mini><i class="pallino"></i><span>Controllo orari…</span></span></div>
+    </div>
+
+    <div class="tubo" aria-hidden="true">
+      <svg viewBox="0 0 400 170" preserveAspectRatio="xMidYMax slice">
+        <g class="tubo-pezzi">
+          <rect x="-10" y="18" width="250" height="26" fill="#7CC4F5"/>
+          <rect x="-10" y="18" width="250" height="8" fill="#B5DEFA"/>
+          <path d="M240 18h22a26 26 0 0 1 26 26v26h-26V52a8 8 0 0 0-8-8h-14z" fill="#7CC4F5"/>
+          <rect x="70" y="12" width="14" height="38" rx="3" fill="#1E7FD6"/>
+          <rect x="226" y="12" width="14" height="38" rx="3" fill="#1E7FD6"/>
+          <rect x="256" y="66" width="38" height="14" rx="3" fill="#1E7FD6"/>
+          <g class="volante"><rect x="150" y="-2" width="8" height="22" fill="#FF7A1A"/><rect x="134" y="-8" width="40" height="10" rx="5" fill="#FF7A1A"/></g>
+        </g>
+        <path class="goccia" d="M275 84c-5 8-9 12-9 17a9 9 0 0 0 18 0c0-5-4-9-9-17z" fill="#7CC4F5"/>
+        <ellipse class="cerchio-acqua" cx="275" cy="152" rx="26" ry="6" fill="none" stroke="#7CC4F5" stroke-width="2.5"/>
+        <ellipse class="cerchio-acqua" cx="275" cy="152" rx="26" ry="6" fill="none" stroke="#7CC4F5" stroke-width="2"/>
+        <path d="M0 152q50-8 100 0t100 0 100 0 100 0v18H0z" fill="#1E7FD6" opacity=".55"/>
+        <path d="M0 160q50-8 100 0t100 0 100 0 100 0v10H0z" fill="#FFFFFF"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- NUMERI -->
+  <section class="numeri" aria-label="In breve">
+    <div class="contenitore">
+      <div class="numero"><b><span data-conta="60">60</span>'</b><span>per arrivare<br>da te</span></div>
+      <div class="numero"><b><span data-conta="24">24</span>h</b><span>urgenze<br>giorno e notte</span></div>
+      <div class="numero"><b><span data-conta="12">12</span></b><span>mesi di garanzia<br>sui lavori</span></div>
+    </div>
+  </section>
+
+  <!-- SERVIZI -->
+  <section id="servizi">
+    <div class="contenitore">
+      <span class="etichetta compare">Servizi</span>
+      <h2 class="compare">Dal rubinetto che gocciola al bagno nuovo.</h2>
+      <p class="sottotitolo compare">Un solo numero per tutto quello che riguarda l'acqua di casa, del negozio o del condominio.</p>
+
+      <div class="griglia">
+        <article class="servizio urgente">
+          <div class="icona"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="14" width="56" height="16" rx="4" fill="#7CC4F5"/><path d="M30 14l-4 6 6 3-4 7" fill="none" stroke="#0B2540" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 38c-3 5-5 7-5 10a5 5 0 0 0 10 0c0-3-2-5-5-10zM40 42c-3 5-5 7-5 10a5 5 0 0 0 10 0c0-3-2-5-5-10z" fill="#FF7A1A"/></svg></div>
+          <h3>Perdite e tubi rotti</h3>
+          <p>Chiudiamo l'acqua, ripariamo e lasciamo asciutto.</p>
+          <span class="targhetta">Urgenza</span>
+        </article>
+
+        <article class="servizio">
+          <div class="icona"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="29" y="4" width="6" height="30" rx="3" fill="#FF7A1A"/><path d="M12 48a20 20 0 0 1 40 0z" fill="#1E7FD6"/><rect x="8" y="48" width="48" height="8" rx="4" fill="#0B2540"/></svg></div>
+          <h3>Scarichi intasati</h3>
+          <p>Lavandini, WC e docce liberati senza rompere nulla.</p>
+        </article>
+
+        <article class="servizio">
+          <div class="icona"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="14" y="4" width="36" height="48" rx="6" fill="#1E7FD6"/><path d="M32 16c-6 8-9 11-9 16a9 9 0 0 0 18 0c0-3-2-5-3-8-2 3-3 3-4 3 1-4 0-7-2-11z" fill="#FF7A1A"/><path d="M22 52v8M42 52v8" stroke="#0B2540" stroke-width="4" stroke-linecap="round"/></svg></div>
+          <h3>Caldaie e scaldabagni</h3>
+          <p>Riparazione, sostituzione e controllo annuale.</p>
+        </article>
+
+        <article class="servizio">
+          <div class="icona"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 26h30a12 12 0 0 1 12 12v6H38v-4a2 2 0 0 0-2-2H8z" fill="#1E7FD6"/><rect x="18" y="10" width="8" height="18" fill="#0B2540"/><rect x="10" y="6" width="24" height="8" rx="4" fill="#FF7A1A"/><path d="M44 48c-2.500 4-4 5.500-4 8a4 4 0 0 0 8 0c0-2.500-1.500-4-4-8z" fill="#7CC4F5"/></svg></div>
+          <h3>Rubinetti e sanitari</h3>
+          <p>Montaggio e sostituzione di rubinetti, WC e lavabi.</p>
+        </article>
+
+        <article class="servizio">
+          <div class="icona"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M4 32h56v6a14 14 0 0 1-14 14H18A14 14 0 0 1 4 38z" fill="#1E7FD6"/><path d="M14 32V14a6 6 0 0 1 12 0" fill="none" stroke="#0B2540" stroke-width="4" stroke-linecap="round"/><path d="M16 52l-3 7M48 52l3 7" stroke="#0B2540" stroke-width="4" stroke-linecap="round"/><circle cx="40" cy="22" r="4" fill="#7CC4F5"/><circle cx="50" cy="16" r="3" fill="#7CC4F5"/></svg></div>
+          <h3>Bagno nuovo</h3>
+          <p>Rifacimento completo, dal progetto alle piastrelle.</p>
+        </article>
+
+        <article class="servizio">
+          <div class="icona"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="27" cy="27" r="19" fill="#EAF4FB" stroke="#0B2540" stroke-width="5"/><path d="M42 42l16 16" stroke="#0B2540" stroke-width="7" stroke-linecap="round"/><path d="M27 15c-5 8-8 11-8 15a8 8 0 0 0 16 0c0-4-3-7-8-15z" fill="#1E7FD6"/></svg></div>
+          <h3>Ricerca perdite</h3>
+          <p>Troviamo la perdita nascosta con la termocamera, senza demolire.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- COME FUNZIONA -->
+  <section id="come" class="passi">
+    <div class="contenitore">
+      <span class="etichetta compare">Come funziona</span>
+      <h2 class="compare">Tre passi, niente sorprese.</h2>
+
+      <div class="percorso">
+        <div class="linea" aria-hidden="true"><i></i></div>
+        <div class="passo">
+          <div class="cerchio">1</div>
+          <h3>Ci chiami o ci scrivi</h3>
+          <p>Raccontaci il problema, anche con una foto su WhatsApp. Ti rispondiamo subito.</p>
+        </div>
+        <div class="passo">
+          <div class="cerchio">2</div>
+          <h3>Arriviamo e ti diciamo il prezzo</h3>
+          <p>Guardiamo il guasto e ti diamo il preventivo scritto prima di toccare un tubo.</p>
+        </div>
+        <div class="passo">
+          <div class="cerchio">3</div>
+          <h3>Ripariamo e paghi a lavoro finito</h3>
+          <p>Contanti, carta o bonifico. Ricevuta sempre e garanzia di 12 mesi.</p>
+        </div>
+      </div>
+
+      <div class="promessa compare">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 6 8v10c0 9 6 16 14 19 8-3 14-10 14-19V8z" fill="#1E7FD6"/><path d="M13 20l5 5 9-10" fill="none" stroke="#fff" stroke-width="3.500" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><b>Preventivo gratuito</b><p>Se il prezzo non ti convince non ci devi nulla, nemmeno l'uscita.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORARI -->
+  <section id="orari" class="orari">
+    <div class="contenitore">
+      <span class="etichetta compare">Orari</span>
+      <h2 class="compare">Quando rispondiamo.</h2>
+      <p class="sottotitolo compare">L'ufficio ha i suoi orari, le urgenze no: per una perdita c'è sempre qualcuno reperibile.</p>
+
+      <div class="orari-griglia">
+        <div class="cartello compare" data-cartello aria-live="polite">
+          <div class="grande"><i class="pallino"></i><span data-stato>…</span></div>
+          <p class="dettaglio" data-dettaglio>Sto controllando l'orario</p>
+          <p class="urgenze"><b>Urgenze 24 ore su 24</b>, anche domenica e festivi</p>
+        </div>
+        <ul class="tabella" data-tabella></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZONA -->
+  <section id="zona">
+    <div class="contenitore">
+      <span class="etichetta compare">Zona servita</span>
+      <h2 class="compare">Siamo vicini, per questo arriviamo presto.</h2>
+
+      <div class="zona-griglia">
+        <div class="mappa compare">
+          <svg viewBox="0 0 400 300" role="img" aria-label="Mappa disegnata della zona servita: Borgofinto sul Naviglio al centro e i comuni vicini entro 15 chilometri">
+            <rect width="400" height="300" fill="#D6E9F7"/>
+            <path d="M-10 60C90 90 150 30 250 70s110 10 170-10" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+            <path d="M60 -10c20 90-20 160 30 320M330 -10c-30 110 20 200-10 320" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+            <path d="M-10 250C90 220 190 280 410 230" fill="none" stroke="#9CCBEA" stroke-width="16" stroke-linecap="round"/>
+            <circle cx="200" cy="150" r="118" fill="#1E7FD6" opacity=".1"/>
+            <circle class="onda" cx="200" cy="150" r="118" fill="none" stroke="#1E7FD6" stroke-width="2" opacity=".6"/>
+            <circle class="onda" cx="200" cy="150" r="118" fill="none" stroke="#1E7FD6" stroke-width="2" opacity=".6"/>
+            <circle cx="200" cy="150" r="118" fill="none" stroke="#1E7FD6" stroke-width="2" stroke-dasharray="5 7"/>
+            <g class="paese" font-family="DM Sans,sans-serif" font-size="10" font-weight="700" fill="#0B2540">
+              <g><circle cx="112" cy="96" r="5" fill="#0B2540"/><text x="112" y="84" text-anchor="middle">Castel Inventato</text></g>
+              <g><circle cx="292" cy="112" r="5" fill="#0B2540"/><text x="292" y="100" text-anchor="middle">San Fasullo</text></g>
+              <g><circle cx="130" cy="214" r="5" fill="#0B2540"/><text x="130" y="232" text-anchor="middle">Villa Immaginaria</text></g>
+              <g><circle cx="276" cy="206" r="5" fill="#0B2540"/><text x="276" y="224" text-anchor="middle">Pieve Finta</text></g>
+            </g>
+            <g class="spillo">
+              <path d="M200 150c-12-15-18-23-18-33a18 18 0 0 1 36 0c0 10-6 18-18 33z" fill="#FF7A1A"/>
+              <circle cx="200" cy="117" r="7" fill="#fff"/>
+            </g>
+            <text x="200" y="168" text-anchor="middle" font-family="Outfit,sans-serif" font-size="12" font-weight="800" fill="#0B2540">Borgofinto</text>
+            <text x="318" y="262" font-family="DM Sans,sans-serif" font-size="10" font-weight="700" fill="#1E7FD6">raggio 15 km</text>
+          </svg>
+        </div>
+
+        <div class="scheda compare">
+          <h3>Goccia Blu Idraulica</h3>
+          <address>Via dei Tubi Inventati 7<br>20000 Borgofinto sul Naviglio (MI)</address>
+          <a class="tel" href="tel:+390200000000">02 0000 0000</a>
+          <div class="azioni">
+            <a class="bottone chiama" href="tel:+390200000000">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+              Chiama
+            </a>
+            <a class="bottone wa" href="https://wa.me/390000000000?text=Buongiorno%2C%20ho%20bisogno%20di%20un%20idraulico" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3 .78.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.25-.12-1.46-.72-1.68-.8s-.39-.12-.56.12-.64.8-.78.97-.29.18-.54.06a6.7 6.7 0 0 1-3.3-2.9c-.25-.43.25-.4.71-1.32a.45.45 0 0 0 0-.43c-.07-.12-.56-1.35-.77-1.85s-.4-.42-.56-.42h-.48a.92.92 0 0 0-.66.3 2.800 2.800 0 0 0-.87 2.070 4.860 4.860 0 0 0 1 2.570 11.100 11.100 0 0 0 4.260 3.760c1.580.68 2.200.74 3 .62a2.550 2.550 0 0 0 1.670-1.180 2.070 2.070 0 0 0 .15-1.180c-.07-.12-.23-.18-.48-.3z"/></svg>
+              WhatsApp
+            </a>
+          </div>
+          <ul class="comuni" aria-label="Comuni serviti">
+            <li>Borgofinto sul Naviglio</li><li>Castel Inventato</li><li>San Fasullo</li><li>Villa Immaginaria</li><li>Pieve Finta</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="contenitore">
+    <div class="logo">Goccia Blu Idraulica</div>
+    <p>Via dei Tubi Inventati 7 · Borgofinto sul Naviglio (MI)<br>Tel. 02 0000 0000 · P. IVA 00000000000</p>
+    <p class="dimostrativo">Progetto dimostrativo – attività di fantasia</p>
+  </div>
+</footer>
+
+<div class="barra-fissa" data-barra>
+  <a class="bottone chiama" href="tel:+390200000000">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+    Chiama ora
+  </a>
+  <a class="bottone wa" href="https://wa.me/390000000000?text=Buongiorno%2C%20ho%20bisogno%20di%20un%20idraulico" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3 .78.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+    WhatsApp
+  </a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* ---------- Orari ufficio e "Aperto ora" ---------- */
+(function () {
+  var M = function (h, m) { return h * 60 + m; };
+  var feriale = [[M(8,0), M(18,30)]];
+  // 0 = domenica … 6 = sabato
+  var ORARI = { 0: [], 1: feriale, 2: feriale, 3: feriale, 4: feriale, 5: feriale, 6: [[M(8,0), M(13,0)]] };
+  var NOMI = ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+  var ORDINE = [1,2,3,4,5,6,0];
+  var ora = function (min) { var h = Math.floor(min/60), m = min%60; return h + ':' + (m<10?'0':'') + m; };
+
+  // Ora italiana, anche se chi guarda è all'estero
+  function adesso() {
+    try {
+      var p = new Intl.DateTimeFormat('en-GB', { timeZone:'Europe/Rome', weekday:'short', hour:'2-digit', minute:'2-digit', hour12:false }).formatToParts(new Date());
+      var v = {}; p.forEach(function (x) { v[x.type] = x.value; });
+      var g = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(v.weekday);
+      if (g < 0) throw 0;
+      return { giorno: g, minuti: (parseInt(v.hour,10) % 24) * 60 + parseInt(v.minute,10) };
+    } catch (e) {
+      var d = new Date(); return { giorno: d.getDay(), minuti: d.getHours()*60 + d.getMinutes() };
+    }
+  }
+
+  function calcola() {
+    var n = adesso(), fasce = ORARI[n.giorno], i;
+    for (i = 0; i < fasce.length; i++) {
+      if (n.minuti >= fasce[i][0] && n.minuti < fasce[i][1]) return { aperto: true, testo: 'Ufficio aperto fino alle ' + ora(fasce[i][1]), giorno: n.giorno };
+    }
+    for (i = 0; i < fasce.length; i++) {
+      if (n.minuti < fasce[i][0]) return { aperto: false, testo: 'L\'ufficio riapre oggi alle ' + ora(fasce[i][0]), giorno: n.giorno };
+    }
+    for (var k = 1; k <= 7; k++) {
+      var g = (n.giorno + k) % 7;
+      if (ORARI[g].length) return { aperto: false, testo: 'L\'ufficio riapre ' + (k === 1 ? 'domani' : NOMI[g].toLowerCase()) + ' alle ' + ora(ORARI[g][0][0]), giorno: n.giorno };
+    }
+    return { aperto: false, testo: '', giorno: n.giorno };
+  }
+
+  function disegna() {
+    var s = calcola();
+    document.querySelector('[data-tabella]').innerHTML = ORDINE.map(function (g) {
+      var f = ORARI[g];
+      var testo = f.length ? f.map(function (x) { return ora(x[0]) + ' – ' + ora(x[1]); }).join(' · ') : 'Solo urgenze';
+      return '<li class="' + (g === s.giorno ? 'oggi' : '') + '"><span>' + NOMI[g] + '</span><span>' + testo + '</span></li>';
+    }).join('');
+    document.querySelector('[data-cartello]').classList.toggle('aperto', s.aperto);
+    document.querySelector('[data-stato]').textContent = s.aperto ? 'Aperto ora' : 'Ufficio chiuso';
+    document.querySelector('[data-dettaglio]').textContent = s.testo;
+    var mini = document.querySelector('[data-stato-mini]');
+    mini.classList.toggle('aperto', s.aperto);
+    mini.lastElementChild.textContent = s.aperto ? 'Aperto ora · rispondiamo subito' : 'Ufficio chiuso · reperibili per urgenze';
+  }
+  disegna();
+  setInterval(disegna, 60000);
+})();
+
+/* ---------- Barra fissa: compare dopo l'apertura ---------- */
+(function () {
+  var barra = document.querySelector('[data-barra]');
+  var apertura = document.querySelector('.apertura');
+  var piede = document.querySelector('footer');
+  function aggiorna() {
+    var dopo = window.scrollY > apertura.offsetHeight * 0.6;
+    var fine = piede.getBoundingClientRect().top < window.innerHeight - 40;
+    barra.classList.toggle('visibile', dopo && !fine);
+  }
+  window.addEventListener('scroll', aggiorna, { passive: true });
+  aggiorna();
+})();
+
+/* ---------- Animazioni (GSAP + ScrollTrigger) ---------- */
+(function () {
+  if (!window.gsap || !window.ScrollTrigger) return; // senza libreria la pagina resta comunque leggibile
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Apertura: il tubo scorre dentro, il titolo entra parola per parola
+  gsap.timeline({ defaults: { ease: 'power3.out' } })
+    .from('.testata', { y: -30, opacity: 0, duration: 0.6 }, 0.1)
+    .from('.tubo-pezzi', { x: -260, opacity: 0, duration: 1.1 }, 0)
+    .from('.apertura h1 .parola', { yPercent: 115, duration: 0.85, stagger: 0.08 }, 0.2)
+    .from('.apertura .entra', { y: 24, opacity: 0, duration: 0.7, stagger: 0.12 }, 0.7)
+    .from('.volante', { rotation: -90, transformOrigin: '50% 100%', duration: 0.8, ease: 'back.out(2)' }, 1);
+
+  // La goccia che cade, all'infinito
+  gsap.set('.cerchio-acqua', { opacity: 0, transformOrigin: '50% 50%' });
+  gsap.timeline({ repeat: -1, repeatDelay: 0.5, delay: 1.2 })
+    .fromTo('.goccia', { scale: 0, y: 0, opacity: 1, transformOrigin: '50% 0%' }, { scale: 1, duration: 0.7, ease: 'power1.out' })
+    .to('.goccia', { y: 50, duration: 0.45, ease: 'power2.in' })
+    .set('.goccia', { opacity: 0 })
+    .fromTo('.cerchio-acqua', { scale: 0.2, opacity: 0.9 }, { scale: 1.5, opacity: 0, duration: 0.9, stagger: 0.25, ease: 'power1.out' });
+
+  // Blocchi che compaiono
+  gsap.utils.toArray('.compare').forEach(function (el) {
+    gsap.from(el, { y: 36, opacity: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+  });
+
+  // Numeri che salgono
+  gsap.utils.toArray('[data-conta]').forEach(function (el) {
+    var fine = parseInt(el.getAttribute('data-conta'), 10), o = { v: 0 };
+    gsap.to(o, { v: fine, duration: 1.4, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 92%', once: true },
+      onUpdate: function () { el.textContent = Math.round(o.v); } });
+  });
+
+  // Servizi: uno dopo l'altro
+  gsap.set('.servizio', { opacity: 0, y: 46 });
+  ScrollTrigger.batch('.servizio', {
+    start: 'top 90%', once: true,
+    onEnter: function (gruppo) {
+      gsap.to(gruppo, { opacity: 1, y: 0, duration: 0.65, stagger: 0.13, ease: 'power3.out', clearProps: 'transform' });
+      gsap.from(gruppo.map(function (c) { return c.querySelector('.icona'); }), { scale: 0, rotation: -20, duration: 0.7, stagger: 0.13, delay: 0.15, ease: 'back.out(2.2)' });
+    }
+  });
+
+  // Come funziona: il tubo si riempie mentre scorri, i passi si accendono
+  gsap.from('.linea i', { scaleY: 0, ease: 'none', scrollTrigger: { trigger: '.percorso', start: 'top 70%', end: 'bottom 60%', scrub: 0.4 } });
+  gsap.utils.toArray('.passo').forEach(function (p) {
+    gsap.from(p.querySelector('.cerchio'), { scale: 0, duration: 0.5, ease: 'back.out(2.5)', scrollTrigger: { trigger: p, start: 'top 78%', once: true } });
+    gsap.from(p.querySelectorAll('h3,p'), { x: 26, opacity: 0, duration: 0.6, stagger: 0.08, ease: 'power2.out', scrollTrigger: { trigger: p, start: 'top 78%', once: true } });
+  });
+
+  // Orari
+  gsap.from('.tabella li', { x: 30, opacity: 0, duration: 0.5, stagger: 0.07, ease: 'power2.out', scrollTrigger: { trigger: '.tabella', start: 'top 85%', once: true } });
+
+  // Zona: lo spillo cade, i paesi compaiono, le onde si allargano
+  var zona = { trigger: '.mappa', start: 'top 75%', once: true };
+  gsap.from('.spillo', { y: -90, opacity: 0, duration: 0.9, ease: 'bounce.out', scrollTrigger: zona });
+  gsap.from('.paese g', { opacity: 0, scale: 0, transformOrigin: '50% 50%', duration: 0.5, stagger: 0.12, delay: 0.5, ease: 'back.out(2)', scrollTrigger: zona });
+  gsap.fromTo('.onda', { scale: 0.1, opacity: 0.7 }, { scale: 1, opacity: 0, duration: 2.6, stagger: 1.3, repeat: -1, ease: 'power1.out' });
+
+  window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+})();
+</script>
+</body>
+</html>
