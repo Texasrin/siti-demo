@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Scintilla · Elettricista pronto intervento</title>
+<meta name="description" content="Scintilla Impianti Elettrici, elettricista di zona con pronto intervento. Progetto dimostrativo – attività di fantasia.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#121417">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --notte:#121417; --notte-2:#1C1F24; --ambra:#FFC21A; --ambra-scura:#E3A300; --ambra-chiara:#FFE38A;
+  --rame:#C8692E; --carta:#F6F3EC; --bianco:#FFFFFF; --testo:#1A1C20; --grigio:#5E6168; --bordo:#E6E0D2;
+  --ok:#1F9D57; --raggio:18px;
+  --titoli:"Sora",system-ui,sans-serif; --sans:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--carta);color:var(--testo);line-height:1.55;font-size:17px;overflow-x:hidden}
+svg{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:var(--titoli);font-weight:800;line-height:1.06;letter-spacing:-.025em;text-wrap:balance}
+.contenitore{width:100%;max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:68px 0}
+h2{font-size:clamp(2rem,7.5vw,3.1rem);margin:12px 0 14px}
+.etichetta{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--rame)}
+.etichetta::before{content:"";width:9px;height:14px;background:currentColor;clip-path:polygon(60% 0,0 58%,45% 58%,30% 100%,100% 38%,55% 38%)}
+.sottotitolo{color:var(--grigio);max-width:34em}
+
+/* ---------- Bottoni ---------- */
+.bottone{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 20px;white-space:nowrap;border-radius:14px;font-weight:700;font-size:1.02rem;text-decoration:none;border:2px solid transparent;transition:transform .2s,background .2s,box-shadow .2s;cursor:pointer;font-family:inherit}
+.bottone svg{width:22px;height:22px;flex:none}
+.bottone:active{transform:scale(.97)}
+.bottone.chiama{background:var(--ambra);color:var(--notte);box-shadow:0 10px 26px -10px rgba(255,194,26,.85)}
+.bottone.chiama:hover{background:var(--ambra-chiara)}
+.bottone.wa{background:#1F9D57;color:#fff;box-shadow:0 10px 24px -10px rgba(31,157,87,.8)}
+.bottone.wa:hover{background:#17804A}
+.bottone.chiaro{border-color:rgba(255,255,255,.35);color:#fff;background:transparent}
+.bottone.chiaro:hover{background:#fff;color:var(--notte)}
+.azioni{display:flex;flex-wrap:wrap;gap:12px}
+.azioni .bottone{flex:1 1 150px}
+
+/* ---------- Testata ---------- */
+.testata{position:absolute;top:0;left:0;right:0;z-index:5;padding:16px 0;color:#fff}
+.testata .contenitore{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--titoli);font-weight:800;font-size:1.2rem;text-decoration:none}
+.logo svg{width:30px;height:30px}
+.testata nav{display:none;gap:26px;font-weight:500;font-size:.95rem}
+.testata nav a{text-decoration:none;opacity:.8}
+.testata nav a:hover{opacity:1}
+.testata .tel-alto{font-weight:700;font-size:.95rem;text-decoration:none;display:flex;align-items:center;gap:6px}
+.testata .tel-alto svg{width:16px;height:16px}
+
+/* ---------- Apertura ---------- */
+.apertura{position:relative;background:var(--notte);color:#fff;padding:96px 0 0;overflow:hidden;min-height:100svh;display:flex;flex-direction:column;transition:background .5s}
+.apertura::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 55% at 78% 30%,rgba(255,194,26,.28),transparent 70%);opacity:1;transition:opacity .5s;pointer-events:none}
+.apertura.spenta::before{opacity:0}
+.apertura .contenitore{position:relative;z-index:2}
+.apertura-griglia{display:grid;gap:8px;align-items:center;flex:1}
+.apertura .etichetta{color:var(--ambra)}
+.apertura h1{font-size:clamp(2.6rem,12vw,5.2rem);margin:14px 0 16px}
+.apertura h1 .riga{display:block;overflow:hidden;padding-bottom:.1em}
+.apertura h1 .parola{display:inline-block}
+.apertura h1 .evidenza{color:var(--ambra);transition:color .4s}
+.apertura.spenta h1 .evidenza{color:#4A4D54}
+.apertura p.intro{color:#C9CBD1;max-width:27em;font-size:1.08rem;margin-bottom:24px}
+.stato-mini{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-size:.92rem;font-weight:500;background:rgba(255,255,255,.08);padding:8px 14px;border-radius:999px}
+.pallino{width:10px;height:10px;border-radius:50%;background:var(--ambra);flex:none;animation:battito 2s infinite;box-shadow:0 0 0 0 rgba(255,194,26,.6)}
+.aperto .pallino{background:#3DDC84;box-shadow:0 0 0 0 rgba(61,220,132,.6);animation-name:battito-verde}
+@keyframes battito{70%{box-shadow:0 0 0 9px rgba(255,194,26,0)}100%{box-shadow:0 0 0 0 rgba(255,194,26,0)}}
+@keyframes battito-verde{70%{box-shadow:0 0 0 9px rgba(61,220,132,0)}100%{box-shadow:0 0 0 0 rgba(61,220,132,0)}}
+
+/* Lampadina e interruttore */
+.scena{position:relative;max-width:360px;width:64%;margin:0 auto}
+.scena svg{width:100%;height:auto;overflow:visible}
+.alone{transition:opacity .45s}
+.vetro{transition:fill .45s}
+.filo-luce{transition:opacity .45s}
+.apertura.spenta .alone,.apertura.spenta .filo-luce,.apertura.spenta .raggi{opacity:0}
+.apertura.spenta .vetro{fill:#2A2D33}
+.corrente{stroke-dasharray:6 14;animation:scorre 1s linear infinite}
+.apertura.spenta .corrente{animation-play-state:paused;opacity:0}
+@keyframes scorre{to{stroke-dashoffset:-40}}
+.interruttore{display:flex;align-items:center;justify-content:center;gap:12px;margin:6px auto 30px;background:none;border:0;color:#C9CBD1;font:600 .92rem var(--sans);cursor:pointer}
+.interruttore .placca{width:58px;height:32px;border-radius:999px;background:var(--ambra);position:relative;transition:background .3s;box-shadow:inset 0 0 0 2px rgba(0,0,0,.15)}
+.interruttore .placca::after{content:"";position:absolute;top:4px;left:30px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .3s cubic-bezier(.3,1.5,.6,1)}
+.interruttore[aria-pressed="false"] .placca{background:#3A3D44}
+.interruttore[aria-pressed="false"] .placca::after{left:4px}
+.interruttore:focus-visible{outline:2px solid var(--ambra);outline-offset:6px;border-radius:999px}
+
+/* ---------- Striscia ---------- */
+.striscia{background:var(--ambra);color:var(--notte);padding:0;overflow:hidden}
+.nastro{display:flex;gap:40px;white-space:nowrap;padding:14px 0;font-family:var(--titoli);font-weight:700;font-size:1rem;width:max-content;animation:nastro 28s linear infinite}
+.nastro span{display:flex;align-items:center;gap:40px}
+.nastro span::after{content:"";width:9px;height:14px;background:var(--notte);clip-path:polygon(60% 0,0 58%,45% 58%,30% 100%,100% 38%,55% 38%)}
+@keyframes nastro{to{transform:translateX(-50%)}}
+
+/* ---------- Numeri ---------- */
+.numeri{background:var(--bianco);padding:0;border-bottom:1px solid var(--bordo)}
+.numeri .contenitore{display:grid;grid-template-columns:repeat(3,1fr);text-align:center}
+.numero{padding:26px 6px;border-right:1px solid var(--bordo)}
+.numero:last-child{border-right:0}
+.numero b{display:block;font-family:var(--titoli);font-weight:800;font-size:clamp(1.9rem,8.5vw,3rem);line-height:1;color:var(--notte)}
+.numero b small{color:var(--ambra-scura);font-size:.6em}
+.numero > span{display:block;margin-top:6px;font-size:.8rem;color:var(--grigio);line-height:1.3}
+
+/* ---------- Servizi ---------- */
+.griglia{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:32px}
+.servizio{background:var(--bianco);border-radius:var(--raggio);padding:18px 16px 20px;border:1.5px solid var(--bordo);transition:transform .25s,box-shadow .25s,border-color .25s;position:relative;overflow:hidden}
+.servizio:hover{transform:translateY(-4px);border-color:var(--ambra);box-shadow:0 20px 30px -22px rgba(18,20,23,.55)}
+.servizio .icona{width:58px;height:58px;border-radius:14px;background:var(--carta);display:grid;place-items:center;margin-bottom:14px}
+.servizio .icona svg{width:36px;height:36px}
+.servizio h3{font-size:1.08rem;margin-bottom:6px;font-weight:700;letter-spacing:-.01em}
+.servizio p{font-size:.9rem;color:var(--grigio);line-height:1.4}
+.servizio.urgente{background:var(--notte);border-color:var(--notte);color:#fff}
+.servizio.urgente p{color:#C9CBD1}
+.servizio.urgente .icona{background:rgba(255,255,255,.08)}
+.targhetta{display:inline-block;margin-top:10px;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--ambra);color:var(--notte);padding:4px 9px;border-radius:999px}
+
+/* ---------- Sicurezza (checklist) ---------- */
+.sicurezza{background:var(--notte);color:#fff}
+.sicurezza .etichetta{color:var(--ambra)}
+.sicurezza .sottotitolo{color:#C9CBD1}
+.sic-griglia{display:grid;gap:26px;margin-top:30px}
+.segnali{list-style:none;display:grid;gap:10px}
+.segnale{display:flex;gap:14px;align-items:flex-start;background:var(--notte-2);border:1px solid #2C3037;border-radius:14px;padding:14px 16px;cursor:pointer;transition:border-color .2s,background .2s;user-select:none}
+.segnale:hover{border-color:#4A4F58}
+.segnale .casella{width:26px;height:26px;border-radius:8px;border:2px solid #5A5F69;flex:none;display:grid;place-items:center;transition:background .2s,border-color .2s;margin-top:1px}
+.segnale .casella svg{width:16px;height:16px;opacity:0;transform:scale(.4);transition:opacity .2s,transform .25s cubic-bezier(.3,1.6,.6,1)}
+.segnale[aria-checked="true"]{border-color:var(--ambra);background:#24221A}
+.segnale[aria-checked="true"] .casella{background:var(--ambra);border-color:var(--ambra)}
+.segnale[aria-checked="true"] .casella svg{opacity:1;transform:none}
+.segnale b{display:block;font-weight:700}
+.segnale span{font-size:.88rem;color:#A9ACB4}
+.segnale:focus-visible{outline:2px solid var(--ambra);outline-offset:3px}
+.verdetto{background:#fff;color:var(--testo);border-radius:var(--raggio);padding:24px 22px}
+.verdetto .metro{height:12px;border-radius:999px;background:#ECE7DA;overflow:hidden;margin:14px 0 16px}
+.verdetto .metro i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3DDC84,var(--ambra),#E5484D);background-size:300% 100%;border-radius:999px;transition:width .5s cubic-bezier(.3,1.2,.5,1),background-position .5s}
+.verdetto h3{font-size:1.45rem}
+.verdetto p{color:var(--grigio);margin-bottom:18px}
+
+/* ---------- Come funziona ---------- */
+.passi{background:var(--bianco)}
+.percorso{position:relative;margin-top:34px;padding-left:64px}
+.linea{position:absolute;left:23px;top:10px;bottom:10px;width:6px;border-radius:6px;background:#EEE8DA;overflow:hidden}
+.linea i{position:absolute;inset:0;background:linear-gradient(var(--rame),var(--ambra));transform-origin:top}
+.passo{position:relative;padding-bottom:34px}
+.passo:last-child{padding-bottom:0}
+.passo .cerchio{position:absolute;left:-64px;top:0;width:52px;height:52px;border-radius:14px;background:var(--notte);color:var(--ambra);display:grid;place-items:center;font-family:var(--titoli);font-weight:800;font-size:1.3rem;border:5px solid var(--bianco)}
+.passo h3{font-size:1.3rem;margin-bottom:6px;padding-top:10px}
+.passo p{color:var(--grigio)}
+.promessa{margin-top:36px;background:var(--carta);border-radius:var(--raggio);padding:20px;display:flex;gap:14px;align-items:flex-start;border:1.5px dashed #D9CFB8}
+.promessa svg{width:34px;height:34px;flex:none}
+.promessa b{font-family:var(--titoli);font-size:1.05rem}
+.promessa p{font-size:.92rem;color:var(--grigio)}
+
+/* ---------- Orari ---------- */
+.orari-griglia{display:grid;gap:24px;margin-top:30px}
+.cartello{background:var(--notte);color:#fff;border-radius:var(--raggio);padding:26px 22px;text-align:center}
+.cartello .grande{font-family:var(--titoli);font-weight:800;font-size:clamp(2rem,9vw,2.7rem);line-height:1.05;color:var(--ambra);display:flex;align-items:center;justify-content:center;gap:12px}
+.cartello.aperto .grande{color:#3DDC84}
+.cartello .pallino{width:14px;height:14px}
+.cartello .dettaglio{margin-top:10px;color:#C9CBD1;font-weight:500}
+.cartello .urgenze{margin-top:16px;padding-top:16px;border-top:1px dashed #3A3D44;font-size:.92rem;color:#C9CBD1}
+.cartello .urgenze b{color:var(--ambra)}
+.tabella{list-style:none}
+.tabella li{display:flex;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px dashed #D9CFB8}
+.tabella li span:last-child{text-align:right;font-variant-numeric:tabular-nums;color:var(--grigio)}
+.tabella li.oggi{font-weight:700}
+.tabella li.oggi span:last-child{color:var(--testo)}
+.tabella li.oggi span:first-child::after{content:"oggi";margin-left:8px;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;background:var(--ambra);color:var(--notte);padding:2px 7px;border-radius:999px;vertical-align:2px}
+
+/* ---------- Zona ---------- */
+.zona{background:var(--bianco)}
+.zona-griglia{display:grid;gap:22px;margin-top:28px}
+.mappa{border-radius:var(--raggio);overflow:hidden;background:#1C1F24}
+.mappa svg{width:100%;height:auto}
+.scheda{background:var(--carta);border-radius:var(--raggio);padding:24px 22px;border:1.5px solid var(--bordo)}
+.scheda h3{font-size:1.45rem;margin-bottom:8px}
+.scheda address{font-style:normal;color:var(--grigio)}
+.scheda .tel{display:block;font-family:var(--titoli);font-weight:800;font-size:1.85rem;color:var(--notte);margin:14px 0 18px;text-decoration:none}
+.comuni{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin-top:18px}
+.comuni li{font-size:.85rem;font-weight:500;background:var(--bianco);border:1px solid var(--bordo);padding:6px 12px;border-radius:999px}
+
+/* ---------- Piè di pagina ---------- */
+footer{background:#0B0C0E;color:#9A9DA5;padding:44px 0 34px;text-align:center;font-size:.9rem}
+footer .logo{justify-content:center;color:#fff;margin-bottom:10px}
+footer .dimostrativo{display:inline-block;margin-top:22px;padding:8px 16px;border:1px dashed rgba(154,157,165,.5);border-radius:999px;font-size:.8rem}
+
+/* ---------- Barra fissa ---------- */
+.barra-fissa{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(18,20,23,.94);backdrop-filter:blur(10px);border-top:1px solid #2C3037;transform:translateY(110%);transition:transform .35s ease}
+.barra-fissa.visibile{transform:none}
+.barra-fissa .bottone{flex:1;min-height:52px;padding:0 12px}
+
+@media (min-width:760px){
+  body{font-size:18px}
+  section{padding:104px 0}
+  .testata nav{display:flex}
+  .apertura{padding-top:110px}
+  .apertura-griglia{grid-template-columns:1.25fr 1fr;gap:30px}
+  .apertura .azioni .bottone{flex:0 0 auto}
+  .scena{width:100%}
+  .griglia{grid-template-columns:repeat(3,1fr);gap:20px}
+  .servizio{padding:24px 22px 26px}
+  .sic-griglia{grid-template-columns:1.2fr 1fr;align-items:start;gap:40px}
+  .verdetto{position:sticky;top:30px}
+  .orari-griglia{grid-template-columns:1fr 1.2fr;align-items:center;gap:60px}
+  .zona-griglia{grid-template-columns:1.3fr 1fr;align-items:stretch}
+  .numero > span{font-size:.95rem}
+  .barra-fissa{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .pallino,.corrente,.nastro{animation:none}
+}
+</style>
+</head>
+<body>
+
+<header class="testata">
+  <div class="contenitore">
+    <a class="logo" href="#inizio" aria-label="Scintilla, torna all'inizio">
+      <svg viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="8" fill="#FFC21A"/><path d="M17 4 7 17h7l-2 9 11-14h-7z" fill="#121417"/></svg>
+      Scintilla
+    </a>
+    <nav aria-label="Sezioni">
+      <a href="#servizi">Servizi</a>
+      <a href="#sicurezza">Il tuo impianto</a>
+      <a href="#come">Come funziona</a>
+      <a href="#orari">Orari</a>
+      <a href="#zona">Zona</a>
+    </nav>
+    <a class="tel-alto" href="tel:+390200000000">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+      02 0000 0000
+    </a>
+  </div>
+</header>
+
+<main id="inizio">
+  <!-- APERTURA -->
+  <section class="apertura" data-apertura>
+    <div class="contenitore apertura-griglia">
+      <div>
+        <span class="etichetta entra">Elettricista di zona · Pronto intervento</span>
+        <h1>
+          <span class="riga"><span class="parola">Salta</span> <span class="parola">la</span> <span class="parola">luce?</span></span>
+          <span class="riga"><span class="parola">Ti</span> <span class="parola">riaccendiamo</span></span>
+          <span class="riga"><span class="parola evidenza">casa</span> <span class="parola evidenza">oggi.</span></span>
+        </h1>
+        <p class="intro entra">Guasti, salvavita che scatta, impianti da rifare o da certificare. Prezzo scritto prima di iniziare, dichiarazione di conformità a fine lavoro.</p>
+        <div class="azioni entra">
+          <a class="bottone chiama" href="tel:+390200000000">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+            Chiama ora
+          </a>
+          <a class="bottone chiaro" href="#servizi">Cosa facciamo</a>
+        </div>
+        <div class="entra"><span class="stato-mini" data-stato-mini><i class="pallino"></i><span>Controllo orari…</span></span></div>
+      </div>
+
+      <div>
+        <div class="scena" aria-hidden="true">
+          <svg viewBox="0 0 300 330">
+            <defs>
+              <radialGradient id="g-alone" cx="50%" cy="50%" r="50%">
+                <stop offset="0" stop-color="#FFC21A" stop-opacity=".55"/>
+                <stop offset="1" stop-color="#FFC21A" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <!-- cavo dal soffitto -->
+            <path class="cavo" d="M150 0V120" stroke="#3A3D44" stroke-width="8" stroke-linecap="round"/>
+            <path class="cavo corrente" d="M150 0V120" stroke="#FFC21A" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <g class="lampada">
+              <circle class="alone" cx="150" cy="212" r="140" fill="url(#g-alone)"/>
+              <g class="raggi" stroke="#FFC21A" stroke-width="5" stroke-linecap="round">
+                <path d="M40 212h-22M282 212h-22M72 134 56 118M228 134l16-16M72 290l-16 16M228 290l16 16"/>
+              </g>
+              <rect x="134" y="118" width="32" height="34" rx="5" fill="#C8692E"/>
+              <path d="M134 128h32M134 138h32" stroke="#8E4518" stroke-width="3"/>
+              <path class="vetro" d="M150 150c-38 0-62 28-62 60 0 24 14 38 26 50 8 8 12 16 12 26h48c0-10 4-18 12-26 12-12 26-26 26-50 0-32-24-60-62-60z" fill="#FFE38A"/>
+              <path class="filo-luce" d="M138 286v-40l6-24 6 16 6-16 6 24v40" fill="none" stroke="#E3A300" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="126" y="286" width="48" height="10" rx="3" fill="#5A5F69"/>
+              <rect x="132" y="298" width="36" height="9" rx="3" fill="#5A5F69"/>
+              <path d="M140 309h20l-4 8h-12z" fill="#3A3D44"/>
+            </g>
+            <g class="scintille" fill="#FFE38A">
+              <path class="sc" d="M60 70l4 8 8 4-8 4-4 8-4-8-8-4 8-4z"/>
+              <path class="sc" d="M246 60l3 6 6 3-6 3-3 6-3-6-6-3 6-3z"/>
+              <path class="sc" d="M262 170l3 6 6 3-6 3-3 6-3-6-6-3 6-3z"/>
+            </g>
+          </svg>
+        </div>
+        <button class="interruttore" type="button" aria-pressed="true" data-interruttore>
+          <span class="placca" aria-hidden="true"></span>
+          <span data-interruttore-testo>Prova l'interruttore</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRISCIA -->
+  <div class="striscia" aria-hidden="true">
+    <div class="nastro">
+      <span>Pronto intervento</span><span>Quadri elettrici</span><span>Certificazioni</span><span>Domotica</span><span>Illuminazione LED</span><span>Ricarica auto</span>
+      <span>Pronto intervento</span><span>Quadri elettrici</span><span>Certificazioni</span><span>Domotica</span><span>Illuminazione LED</span><span>Ricarica auto</span>
+    </div>
+  </div>
+
+  <!-- NUMERI -->
+  <section class="numeri" aria-label="In breve">
+    <div class="contenitore">
+      <div class="numero"><b><span data-conta="24">24</span><small>h</small></b><span>reperibili<br>per i guasti</span></div>
+      <div class="numero"><b><span data-conta="15">15</span><small>km</small></b><span>di zona<br>servita</span></div>
+      <div class="numero"><b><span data-conta="12">12</span><small>mesi</small></b><span>di garanzia<br>sui lavori</span></div>
+    </div>
+  </section>
+
+  <!-- SERVIZI -->
+  <section id="servizi">
+    <div class="contenitore">
+      <span class="etichetta compare">Servizi</span>
+      <h2 class="compare">Dalla presa che non va all'impianto nuovo.</h2>
+      <p class="sottotitolo compare">Un solo numero per tutto quello che riguarda la corrente di casa, del negozio o del condominio.</p>
+
+      <div class="griglia">
+        <article class="servizio urgente">
+          <div class="icona"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M36 4 14 36h14l-4 24 26-34H36z" fill="#FFC21A"/></svg></div>
+          <h3>Guasti e blackout</h3>
+          <p>Troviamo il guasto, mettiamo in sicurezza e ridiamo corrente.</p>
+          <span class="targhetta">Urgenza</span>
+        </article>
+
+        <article class="servizio">
+          <div class="icona"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="6" width="44" height="52" rx="6" fill="#121417"/><rect x="18" y="16" width="8" height="16" rx="2" fill="#FFC21A"/><rect x="28" y="16" width="8" height="16" rx="2" fill="#fff"/><rect x="38" y="16" width="8" height="16" rx="2" fill="#fff"/><rect x="18" y="38" width="28" height="10" rx="2" fill="#C8692E"/></svg></div>
+          <h3>Quadri e salvavita</h3>
+          <p>Il salvavita scatta di continuo? Lo controlliamo e lo sistemiamo.</p>
+        </article>
+
+        <article class="servizio">
+          <div class="icona"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="12" y="4" width="40" height="54" rx="5" fill="#fff" stroke="#121417" stroke-width="4"/><path d="M20 16h24M20 24h24M20 32h14" stroke="#121417" stroke-width="3.5" stroke-linecap="round"/><circle cx="44" cy="46" r="10" fill="#FFC21A"/><path d="M39 46l4 4 6-7" fill="none" stroke="#121417" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Certificazioni</h3>
+          <p>Dichiarazione di conformità per vendita, affitto o bonus.</p>
+        </article>
+
+        <article class="servizio">
+          <div class="icona"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 30 32 8l24 22v26H8z" fill="#121417"/><rect x="24" y="30" width="16" height="22" rx="3" fill="#FFC21A"/><path d="M20 22a17 17 0 0 1 24 0M25 27a10 10 0 0 1 14 0" fill="none" stroke="#FFC21A" stroke-width="3" stroke-linecap="round" transform="translate(0 -14)"/></svg></div>
+          <h3>Domotica</h3>
+          <p>Luci, tapparelle e riscaldamento comandati dal telefono.</p>
+        </article>
+
+        <article class="servizio">
+          <div class="icona"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4v12" stroke="#121417" stroke-width="4" stroke-linecap="round"/><path d="M14 30a18 14 0 0 1 36 0z" fill="#121417"/><ellipse cx="32" cy="32" rx="10" ry="4" fill="#FFC21A"/><path d="M22 40l-6 14M32 40v16M42 40l6 14" stroke="#FFC21A" stroke-width="3.5" stroke-linecap="round" opacity=".8"/></svg></div>
+          <h3>Illuminazione LED</h3>
+          <p>Più luce, bollette più basse. Interni, esterni e vetrine.</p>
+        </article>
+
+        <article class="servizio">
+          <div class="icona"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="12" y="6" width="26" height="50" rx="6" fill="#121417"/><rect x="17" y="12" width="16" height="12" rx="2" fill="#FFC21A"/><path d="M38 34h8a6 6 0 0 1 6 6v10a4 4 0 0 0 8 0V28" fill="none" stroke="#C8692E" stroke-width="4" stroke-linecap="round"/><path d="M27 30l-6 9h5l-2 7 7-10h-5z" fill="#FFC21A"/></svg></div>
+          <h3>Ricarica auto</h3>
+          <p>Installazione della wallbox nel box o nel cortile.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SICUREZZA -->
+  <section id="sicurezza" class="sicurezza">
+    <div class="contenitore">
+      <span class="etichetta compare">Il tuo impianto</span>
+      <h2 class="compare">Il tuo impianto ti sta avvisando?</h2>
+      <p class="sottotitolo compare">Tocca i segnali che riconosci in casa tua. Ti diciamo se conviene farlo vedere.</p>
+
+      <div class="sic-griglia">
+        <ul class="segnali" data-segnali>
+          <li class="segnale" role="checkbox" aria-checked="false" tabindex="0"><span class="casella"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="#121417" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Il salvavita scatta spesso</b><span>Anche senza tanti elettrodomestici accesi.</span></div></li>
+          <li class="segnale" role="checkbox" aria-checked="false" tabindex="0"><span class="casella"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="#121417" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Prese calde o annerite</b><span>Oppure odore di bruciato vicino a una presa.</span></div></li>
+          <li class="segnale" role="checkbox" aria-checked="false" tabindex="0"><span class="casella"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="#121417" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Le luci tremolano</b><span>Quando parte la lavatrice o il forno.</span></div></li>
+          <li class="segnale" role="checkbox" aria-checked="false" tabindex="0"><span class="casella"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="#121417" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Ciabatte su ciabatte</b><span>Le prese non bastano mai.</span></div></li>
+          <li class="segnale" role="checkbox" aria-checked="false" tabindex="0"><span class="casella"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="#121417" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Impianto di oltre 25 anni</b><span>O non sai se hai la dichiarazione di conformità.</span></div></li>
+        </ul>
+
+        <div class="verdetto compare" aria-live="polite">
+          <span class="etichetta">Il nostro parere</span>
+          <div class="metro"><i data-metro></i></div>
+          <h3 data-verdetto-titolo>Tocca un segnale</h3>
+          <p data-verdetto-testo>Nessun segnale? Ottimo. Un controllo ogni tanto resta comunque una buona idea.</p>
+          <a class="bottone chiama" href="tel:+390200000000">Chiedi un controllo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COME FUNZIONA -->
+  <section id="come" class="passi">
+    <div class="contenitore">
+      <span class="etichetta compare">Come funziona</span>
+      <h2 class="compare">Tre passi, niente sorprese.</h2>
+
+      <div class="percorso">
+        <div class="linea" aria-hidden="true"><i></i></div>
+        <div class="passo">
+          <div class="cerchio">1</div>
+          <h3>Ci chiami o ci scrivi</h3>
+          <p>Raccontaci cosa succede, anche con una foto del quadro su WhatsApp.</p>
+        </div>
+        <div class="passo">
+          <div class="cerchio">2</div>
+          <h3>Controlliamo e ti diamo il prezzo</h3>
+          <p>Verifichiamo l'impianto e ti lasciamo il preventivo scritto prima di iniziare.</p>
+        </div>
+        <div class="passo">
+          <div class="cerchio">3</div>
+          <h3>Lavoriamo e ti lasciamo i documenti</h3>
+          <p>A fine lavoro: dichiarazione di conformità, ricevuta e garanzia di 12 mesi.</p>
+        </div>
+      </div>
+
+      <div class="promessa compare">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 6 8v10c0 9 6 16 14 19 8-3 14-10 14-19V8z" fill="#121417"/><path d="M22 10l-8 11h6l-2 9 8-12h-6z" fill="#FFC21A"/></svg>
+        <div><b>Preventivo gratuito</b><p>Se il prezzo non ti convince non ci devi nulla, nemmeno l'uscita.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORARI -->
+  <section id="orari">
+    <div class="contenitore">
+      <span class="etichetta compare">Orari</span>
+      <h2 class="compare">Quando rispondiamo.</h2>
+      <p class="sottotitolo compare">L'ufficio ha i suoi orari, i guasti no: se resti senza corrente c'è sempre qualcuno reperibile.</p>
+
+      <div class="orari-griglia">
+        <div class="cartello compare" data-cartello aria-live="polite">
+          <div class="grande"><i class="pallino"></i><span data-stato>…</span></div>
+          <p class="dettaglio" data-dettaglio>Sto controllando l'orario</p>
+          <p class="urgenze"><b>Guasti 24 ore su 24</b>, anche domenica e festivi</p>
+        </div>
+        <ul class="tabella" data-tabella></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZONA -->
+  <section id="zona" class="zona">
+    <div class="contenitore">
+      <span class="etichetta compare">Zona servita</span>
+      <h2 class="compare">Siamo vicini, per questo arriviamo presto.</h2>
+
+      <div class="zona-griglia">
+        <div class="mappa compare">
+          <svg viewBox="0 0 400 300" role="img" aria-label="Mappa disegnata della zona servita: Borgofinto sul Naviglio al centro, collegato con linee di corrente ai comuni vicini entro 15 chilometri">
+            <rect width="400" height="300" fill="#1C1F24"/>
+            <g stroke="#2A2E35" stroke-width="1">
+              <path d="M0 50h400M0 100h400M0 150h400M0 200h400M0 250h400M50 0v300M100 0v300M150 0v300M200 0v300M250 0v300M300 0v300M350 0v300"/>
+            </g>
+            <path d="M-10 250C90 220 190 280 410 230" fill="none" stroke="#24405A" stroke-width="14" stroke-linecap="round"/>
+            <g class="rete" fill="none" stroke="#FFC21A" stroke-width="2.5" stroke-linecap="round">
+              <path class="ramo" d="M200 150 112 96"/>
+              <path class="ramo" d="M200 150 292 112"/>
+              <path class="ramo" d="M200 150 130 214"/>
+              <path class="ramo" d="M200 150 276 206"/>
+            </g>
+            <g class="paese" font-family="Manrope,sans-serif" font-size="10" font-weight="700" fill="#E9E6DE">
+              <g><circle cx="112" cy="96" r="6" fill="#FFC21A"/><text x="112" y="82" text-anchor="middle">Castel Inventato</text></g>
+              <g><circle cx="292" cy="112" r="6" fill="#FFC21A"/><text x="292" y="98" text-anchor="middle">San Fasullo</text></g>
+              <g><circle cx="130" cy="214" r="6" fill="#FFC21A"/><text x="130" y="234" text-anchor="middle">Villa Immaginaria</text></g>
+              <g><circle cx="276" cy="206" r="6" fill="#FFC21A"/><text x="276" y="226" text-anchor="middle">Pieve Finta</text></g>
+            </g>
+            <g class="centrale">
+              <circle cx="200" cy="150" r="22" fill="#FFC21A"/>
+              <path d="M204 136l-12 16h8l-3 12 12-16h-8z" fill="#121417"/>
+            </g>
+            <text x="200" y="190" text-anchor="middle" font-family="Sora,sans-serif" font-size="12" font-weight="800" fill="#fff">Borgofinto</text>
+            <text x="318" y="282" font-family="Manrope,sans-serif" font-size="10" font-weight="700" fill="#FFC21A">raggio 15 km</text>
+          </svg>
+        </div>
+
+        <div class="scheda compare">
+          <h3>Scintilla Impianti Elettrici</h3>
+          <address>Via dei Fili Inventati 12<br>20000 Borgofinto sul Naviglio (MI)</address>
+          <a class="tel" href="tel:+390200000000">02 0000 0000</a>
+          <div class="azioni">
+            <a class="bottone chiama" href="tel:+390200000000">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+              Chiama
+            </a>
+            <a class="bottone wa" href="https://wa.me/390000000000?text=Buongiorno%2C%20ho%20bisogno%20di%20un%20elettricista" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3 .78.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+              WhatsApp
+            </a>
+          </div>
+          <ul class="comuni" aria-label="Comuni serviti">
+            <li>Borgofinto sul Naviglio</li><li>Castel Inventato</li><li>San Fasullo</li><li>Villa Immaginaria</li><li>Pieve Finta</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="contenitore">
+    <div class="logo">Scintilla Impianti Elettrici</div>
+    <p>Via dei Fili Inventati 12 · Borgofinto sul Naviglio (MI)<br>Tel. 02 0000 0000 · P. IVA 00000000000</p>
+    <p class="dimostrativo">Progetto dimostrativo – attività di fantasia</p>
+  </div>
+</footer>
+
+<div class="barra-fissa" data-barra>
+  <a class="bottone chiama" href="tel:+390200000000">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+    Chiama ora
+  </a>
+  <a class="bottone wa" href="https://wa.me/390000000000?text=Buongiorno%2C%20ho%20bisogno%20di%20un%20elettricista" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3 .78.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+    WhatsApp
+  </a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* ---------- Orari ufficio e "Aperto ora" ---------- */
+(function () {
+  var M = function (h, m) { return h * 60 + m; };
+  var feriale = [[M(8,0), M(12,30)], [M(14,0), M(18,30)]];
+  // 0 = domenica … 6 = sabato
+  var ORARI = { 0: [], 1: feriale, 2: feriale, 3: feriale, 4: feriale, 5: feriale, 6: [[M(8,30), M(12,30)]] };
+  var NOMI = ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+  var ORDINE = [1,2,3,4,5,6,0];
+  var ora = function (min) { var h = Math.floor(min/60), m = min%60; return h + ':' + (m<10?'0':'') + m; };
+
+  function adesso() {
+    try {
+      var p = new Intl.DateTimeFormat('en-GB', { timeZone:'Europe/Rome', weekday:'short', hour:'2-digit', minute:'2-digit', hour12:false }).formatToParts(new Date());
+      var v = {}; p.forEach(function (x) { v[x.type] = x.value; });
+      var g = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(v.weekday);
+      if (g < 0) throw 0;
+      return { giorno: g, minuti: (parseInt(v.hour,10) % 24) * 60 + parseInt(v.minute,10) };
+    } catch (e) {
+      var d = new Date(); return { giorno: d.getDay(), minuti: d.getHours()*60 + d.getMinutes() };
+    }
+  }
+
+  function calcola() {
+    var n = adesso(), fasce = ORARI[n.giorno], i;
+    for (i = 0; i < fasce.length; i++) {
+      if (n.minuti >= fasce[i][0] && n.minuti < fasce[i][1]) return { aperto: true, testo: 'Ufficio aperto fino alle ' + ora(fasce[i][1]), giorno: n.giorno };
+    }
+    for (i = 0; i < fasce.length; i++) {
+      if (n.minuti < fasce[i][0]) return { aperto: false, testo: 'L\'ufficio riapre oggi alle ' + ora(fasce[i][0]), giorno: n.giorno };
+    }
+    for (var k = 1; k <= 7; k++) {
+      var g = (n.giorno + k) % 7;
+      if (ORARI[g].length) return { aperto: false, testo: 'L\'ufficio riapre ' + (k === 1 ? 'domani' : NOMI[g].toLowerCase()) + ' alle ' + ora(ORARI[g][0][0]), giorno: n.giorno };
+    }
+    return { aperto: false, testo: '', giorno: n.giorno };
+  }
+
+  function disegna() {
+    var s = calcola();
+    document.querySelector('[data-tabella]').innerHTML = ORDINE.map(function (g) {
+      var f = ORARI[g];
+      var testo = f.length ? f.map(function (x) { return ora(x[0]) + ' – ' + ora(x[1]); }).join(' · ') : 'Solo guasti';
+      return '<li class="' + (g === s.giorno ? 'oggi' : '') + '"><span>' + NOMI[g] + '</span><span>' + testo + '</span></li>';
+    }).join('');
+    document.querySelector('[data-cartello]').classList.toggle('aperto', s.aperto);
+    document.querySelector('[data-stato]').textContent = s.aperto ? 'Aperto ora' : 'Ufficio chiuso';
+    document.querySelector('[data-dettaglio]').textContent = s.testo;
+    var mini = document.querySelector('[data-stato-mini]');
+    mini.classList.toggle('aperto', s.aperto);
+    mini.lastElementChild.textContent = s.aperto ? 'Aperto ora · rispondiamo subito' : 'Ufficio chiuso · reperibili per i guasti';
+  }
+  disegna();
+  setInterval(disegna, 60000);
+})();
+
+/* ---------- Interruttore della lampadina ---------- */
+(function () {
+  var btn = document.querySelector('[data-interruttore]');
+  var testo = document.querySelector('[data-interruttore-testo]');
+  var apertura = document.querySelector('[data-apertura]');
+  var toccato = false;
+  btn.addEventListener('click', function () {
+    var acceso = btn.getAttribute('aria-pressed') !== 'true';
+    btn.setAttribute('aria-pressed', String(acceso));
+    apertura.classList.toggle('spenta', !acceso);
+    if (!toccato) toccato = true;
+    testo.textContent = acceso ? 'Visto? Ci pensiamo noi' : 'Al buio? Riaccendila';
+  });
+})();
+
+/* ---------- Segnali dell'impianto ---------- */
+(function () {
+  var voci = [].slice.call(document.querySelectorAll('.segnale'));
+  var metro = document.querySelector('[data-metro]');
+  var titolo = document.querySelector('[data-verdetto-titolo]');
+  var testo = document.querySelector('[data-verdetto-testo]');
+  var PARERI = [
+    ['Tocca un segnale', 'Nessun segnale? Ottimo. Un controllo ogni tanto resta comunque una buona idea.'],
+    ['Teniamolo d\'occhio', 'Un segnale da solo può essere poca cosa, ma vale una verifica veloce.'],
+    ['Meglio farlo vedere', 'Più segnali insieme indicano un impianto sotto sforzo. Un controllo evita guai.'],
+    ['Chiamaci presto', 'Questi segnali insieme vanno presi sul serio: è il momento di un controllo completo.']
+  ];
+  function aggiorna() {
+    var n = voci.filter(function (v) { return v.getAttribute('aria-checked') === 'true'; }).length;
+    var livello = n === 0 ? 0 : n === 1 ? 1 : n <= 3 ? 2 : 3;
+    metro.style.width = (n / voci.length * 100) + '%';
+    metro.style.backgroundPosition = (100 - n / voci.length * 100) + '% 0';
+    titolo.textContent = PARERI[livello][0];
+    testo.textContent = PARERI[livello][1];
+  }
+  voci.forEach(function (v) {
+    function cambia() { v.setAttribute('aria-checked', String(v.getAttribute('aria-checked') !== 'true')); aggiorna(); }
+    v.addEventListener('click', cambia);
+    v.addEventListener('keydown', function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); cambia(); } });
+  });
+})();
+
+/* ---------- Barra fissa: compare dopo l'apertura ---------- */
+(function () {
+  var barra = document.querySelector('[data-barra]');
+  var apertura = document.querySelector('.apertura');
+  var piede = document.querySelector('footer');
+  function aggiorna() {
+    var dopo = window.scrollY > apertura.offsetHeight * 0.6;
+    var fine = piede.getBoundingClientRect().top < window.innerHeight - 40;
+    barra.classList.toggle('visibile', dopo && !fine);
+  }
+  window.addEventListener('scroll', aggiorna, { passive: true });
+  aggiorna();
+})();
+
+/* ---------- Animazioni (GSAP + ScrollTrigger) ---------- */
+(function () {
+  if (!window.gsap || !window.ScrollTrigger) return; // senza libreria la pagina resta comunque leggibile
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Apertura: la lampadina scende, sfarfalla e si accende; il titolo entra parola per parola
+  gsap.set('.alone, .raggi, .filo-luce', { opacity: 0 });
+  gsap.set('.vetro', { fill: '#2A2D33' });
+  gsap.timeline({ defaults: { ease: 'power3.out' } })
+    .from('.testata', { y: -30, opacity: 0, duration: 0.6 }, 0.1)
+    .from('.lampada', { y: -120, rotation: -8, transformOrigin: '50% 0%', duration: 1.1, ease: 'elastic.out(1,0.55)' }, 0)
+    .from('.cavo', { scaleY: 0, transformOrigin: '50% 0%', duration: 0.6 }, 0)
+    .from('.apertura h1 .parola', { yPercent: 115, duration: 0.85, stagger: 0.08 }, 0.2)
+    .from('.apertura .entra', { y: 24, opacity: 0, duration: 0.7, stagger: 0.12 }, 0.7)
+    .to('.filo-luce, .alone', { opacity: 1, duration: 0.05 }, 1.2)
+    .to('.filo-luce, .alone', { opacity: 0.1, duration: 0.05 }, 1.3)
+    .to('.filo-luce, .alone', { opacity: 1, duration: 0.05 }, 1.42)
+    .to('.filo-luce, .alone', { opacity: 0.2, duration: 0.05 }, 1.5)
+    .to('.vetro', { fill: '#FFE38A', duration: 0.25 }, 1.6)
+    .to('.filo-luce, .alone', { opacity: 1, duration: 0.25 }, 1.6)
+    .to('.raggi', { opacity: 1, duration: 0.4 }, 1.7)
+    .from('.raggi path', { scale: 0.6, transformOrigin: '150px 212px', duration: 0.6, ease: 'back.out(2)' }, 1.7)
+    .from('.interruttore', { opacity: 0, y: 14, duration: 0.5 }, 1.9)
+    .add(function () { gsap.set('.alone, .raggi, .filo-luce, .vetro', { clearProps: 'opacity,fill' }); }, 2.4);
+
+  // Lampadina che oscilla piano
+  gsap.to('.lampada', { rotation: 2.5, transformOrigin: '150px 0px', duration: 2.4, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1.2 });
+
+  // Scintille
+  gsap.utils.toArray('.sc').forEach(function (s, i) {
+    gsap.fromTo(s, { scale: 0, opacity: 0, transformOrigin: '50% 50%' }, { scale: 1.2, opacity: 1, duration: 0.35, yoyo: true, repeat: -1, repeatDelay: 1.6 + i * 0.7, delay: 2 + i * 0.5, ease: 'power2.out' });
+  });
+
+  // Blocchi che compaiono
+  gsap.utils.toArray('.compare').forEach(function (el) {
+    gsap.from(el, { y: 36, opacity: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+  });
+
+  // Numeri che salgono
+  gsap.utils.toArray('[data-conta]').forEach(function (el) {
+    var fine = parseInt(el.getAttribute('data-conta'), 10), o = { v: 0 };
+    gsap.to(o, { v: fine, duration: 1.4, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 92%', once: true },
+      onUpdate: function () { el.textContent = Math.round(o.v); } });
+  });
+
+  // Servizi: uno dopo l'altro, con un lampo sull'icona
+  gsap.set('.servizio', { opacity: 0, y: 46 });
+  ScrollTrigger.batch('.servizio', {
+    start: 'top 90%', once: true,
+    onEnter: function (gruppo) {
+      gsap.to(gruppo, { opacity: 1, y: 0, duration: 0.65, stagger: 0.13, ease: 'power3.out', clearProps: 'transform' });
+      gsap.from(gruppo.map(function (c) { return c.querySelector('.icona'); }), { scale: 0, duration: 0.6, stagger: 0.13, delay: 0.15, ease: 'back.out(2.4)' });
+    }
+  });
+
+  // Segnali: entrano da sinistra
+  gsap.from('.segnale', { x: -30, opacity: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out', scrollTrigger: { trigger: '.segnali', start: 'top 85%', once: true } });
+
+  // Come funziona: la corrente scorre nel cavo mentre scorri
+  gsap.from('.linea i', { scaleY: 0, ease: 'none', scrollTrigger: { trigger: '.percorso', start: 'top 70%', end: 'bottom 60%', scrub: 0.4 } });
+  gsap.utils.toArray('.passo').forEach(function (p) {
+    gsap.from(p.querySelector('.cerchio'), { scale: 0, rotation: -30, duration: 0.5, ease: 'back.out(2.5)', scrollTrigger: { trigger: p, start: 'top 78%', once: true } });
+    gsap.from(p.querySelectorAll('h3,p'), { x: 26, opacity: 0, duration: 0.6, stagger: 0.08, ease: 'power2.out', scrollTrigger: { trigger: p, start: 'top 78%', once: true } });
+  });
+
+  // Orari
+  gsap.from('.tabella li', { x: 30, opacity: 0, duration: 0.5, stagger: 0.07, ease: 'power2.out', scrollTrigger: { trigger: '.tabella', start: 'top 85%', once: true } });
+
+  // Zona: la centrale si accende e la corrente raggiunge i paesi
+  var zona = { trigger: '.mappa', start: 'top 75%', once: true };
+  gsap.utils.toArray('.ramo').forEach(function (r) { var l = r.getTotalLength(); gsap.set(r, { strokeDasharray: l, strokeDashoffset: l }); });
+  gsap.timeline({ scrollTrigger: zona })
+    .from('.centrale', { scale: 0, transformOrigin: '200px 150px', duration: 0.6, ease: 'back.out(2.5)' })
+    .to('.ramo', { strokeDashoffset: 0, duration: 0.7, stagger: 0.15, ease: 'power2.inOut' })
+    .from('.paese g', { opacity: 0, scale: 0, transformOrigin: '50% 50%', duration: 0.45, stagger: 0.15, ease: 'back.out(2)' }, '-=0.6');
+  gsap.to('.centrale circle', { attr: { r: 26 }, duration: 0.9, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: 2 });
+
+  window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+})();
+</script>
+</body>
+</html>
