@@ -187,7 +187,7 @@ footer{padding:30px 0;text-align:center;color:var(--mute);font-size:.9rem}
     apri.href=base+nome;
     if(!cache[nome]){
       var f=document.createElement('iframe');
-      f.src=base+nome; f.title='Esempio di sito: '+bottoni[i].textContent; f.tabIndex=-1; f.setAttribute('aria-hidden','true');
+      f.src=base+nome; f.setAttribute('scrolling','no'); f.title='Esempio di sito: '+bottoni[i].textContent; f.tabIndex=-1; f.setAttribute('aria-hidden','true');
       f.addEventListener('load',function(){f.dataset.pronto='1'; if(bottoni[attuale].dataset.demo===nome) accendi(nome)});
       schermo.appendChild(f); cache[nome]=f;
     }
