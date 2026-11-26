@@ -44,7 +44,7 @@ h2{font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.15;margin-bottom:14px;letter
 .step b{display:block;font-size:2.6rem;color:var(--acc);line-height:1;margin-bottom:12px}
 .step p{color:var(--mute)}
 /* cards */
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:36px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;margin-top:36px}
 .card{background:var(--card);border-radius:var(--r);padding:30px;text-decoration:none;display:block;transition:transform .25s,box-shadow .25s}
 .card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.35)}
 .card h3{font-size:1.25rem;margin-bottom:8px}
@@ -107,13 +107,16 @@ footer{padding:30px 0;text-align:center;color:var(--mute);font-size:.9rem}
   <div class="wrap">
     <div class="tag rv">Esempi</div>
     <h2 class="rv">Guarda com'è fatto.</h2>
-    <p class="lead rv">Due siti dimostrativi, con ditte inventate. Il tuo sarebbe così, ma con il tuo nome e le tue recensioni.</p>
+    <p class="lead rv">Tre siti dimostrativi, con attività inventate. Il tuo sarebbe così, ma con il tuo nome e le tue recensioni.</p>
     <div class="grid2">
       <a class="card rv" href="https://texasrin.github.io/siti-demo/idraulico-goccia-blu.html" target="_blank" rel="noopener">
         <h3>Idraulico</h3><p>Sito dimostrativo per un idraulico, con chiamata e WhatsApp a portata di pollice.</p><span>Apri l'esempio →</span>
       </a>
       <a class="card rv d1" href="https://texasrin.github.io/siti-demo/elettricista-scintilla.html" target="_blank" rel="noopener">
         <h3>Elettricista</h3><p>Sito dimostrativo per un elettricista, con lampadina animata e checklist per il cliente.</p><span>Apri l'esempio →</span>
+      </a>
+      <a class="card rv d2" href="https://texasrin.github.io/siti-demo/estetica-petalo.html" target="_blank" rel="noopener">
+        <h3>Centro estetico</h3><p>Sito dimostrativo per un centro estetico: la cliente sceglie i trattamenti e prenota su WhatsApp.</p><span>Apri l'esempio →</span>
       </a>
     </div>
   </div>
@@ -138,8 +141,7 @@ footer{padding:30px 0;text-align:center;color:var(--mute);font-size:.9rem}
     <div class="tag rv">Chi sono</div>
     <h2 class="rv">Gabriele</h2>
     <p class="lead rv">Faccio siti per artigiani della zona di Milano ovest e sud. Mi scrivi, mi rispondi in due righe e vedi la bozza.</p>
-    <p class="lead rv" style="margin-top:14px"><span class="ph">[Segnaposto: una frase tua su di te, da scrivere tu]</span></p>
-    <p class="lead rv" style="margin-top:14px"><span class="ph">[Segnaposto: la recensione di un primo cliente, quando ce l'hai]</span></p>
+    <p class="lead rv" style="margin-top:14px">Mi chiamo Gabriele e faccio siti semplici per chi lavora in zona: i tuoi servizi, le tue recensioni e il tasto per chiamarti. Mi scrivi su WhatsApp e ti rispondo io, di persona.</p>
   </div>
 </section>
 
