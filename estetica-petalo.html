@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Petalo · Estetica e benessere</title>
+<meta name="description" content="Petalo, centro estetico di quartiere: viso, mani, corpo e cerette. Prenoti direttamente su WhatsApp. Progetto dimostrativo – attività di fantasia.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#2E2422">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cacao:#2E2422; --cacao-2:#3C302D; --crema:#F7F0E8; --crema-2:#EFE4D8; --bianco:#FFFFFF;
+  --cipria:#EBC3B3; --cipria-chiara:#F6DFD5; --terra:#B4574A; --terra-scura:#94443A;
+  --salvia:#8DA287; --salvia-chiara:#DCE5D7; --testo:#2E2422; --grigio:#6E625E; --bordo:#E4D6C9;
+  --wa:#1F9D57; --raggio:22px;
+  --titoli:"Fraunces",Georgia,serif; --sans:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--crema);color:var(--testo);line-height:1.55;font-size:17px;overflow-x:hidden}
+svg{display:block;max-width:100%}
+a{color:inherit}
+button{font-family:inherit}
+h1,h2,h3{font-family:var(--titoli);font-weight:600;line-height:1.05;letter-spacing:-.02em;text-wrap:balance}
+.contenitore{width:100%;max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:72px 0}
+h2{font-size:clamp(2.1rem,8vw,3.2rem);margin:12px 0 14px}
+h2 em{font-style:italic;color:var(--terra)}
+.etichetta{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--terra)}
+.etichetta::before{content:"";width:12px;height:12px;background:currentColor;border-radius:60% 0 60% 0;transform:rotate(45deg)}
+.sottotitolo{color:var(--grigio);max-width:34em}
+
+/* ---------- Bottoni ---------- */
+.bottone{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 22px;white-space:nowrap;border-radius:999px;font-weight:800;font-size:1rem;text-decoration:none;border:2px solid transparent;transition:transform .2s,background .2s,box-shadow .2s,opacity .2s;cursor:pointer}
+.bottone svg{width:22px;height:22px;flex:none}
+.bottone:active{transform:scale(.97)}
+.bottone.wa{background:var(--wa);color:#fff;box-shadow:0 12px 26px -12px rgba(31,157,87,.85)}
+.bottone.wa:hover{background:#17804A}
+.bottone.terra{background:var(--terra);color:#fff;box-shadow:0 12px 26px -12px rgba(180,87,74,.85)}
+.bottone.terra:hover{background:var(--terra-scura)}
+.bottone.chiaro{border-color:var(--cacao);color:var(--cacao);background:transparent}
+.bottone.chiaro:hover{background:var(--cacao);color:var(--crema)}
+.bottone[aria-disabled="true"]{opacity:.45;pointer-events:none;box-shadow:none}
+.azioni{display:flex;flex-wrap:wrap;gap:12px}
+.azioni .bottone{flex:1 1 160px}
+
+/* ---------- Testata ---------- */
+.testata{position:absolute;top:0;left:0;right:0;z-index:5;padding:18px 0}
+.testata .contenitore{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--titoli);font-weight:700;font-size:1.45rem;text-decoration:none;color:var(--cacao)}
+.logo svg{width:30px;height:30px}
+.menu{display:none;gap:26px;font-weight:700;font-size:.95rem}
+.menu a{text-decoration:none;opacity:.8}
+.menu a:hover{opacity:1;color:var(--terra)}
+.testata .tel-piccolo{font-weight:800;text-decoration:none;font-size:.95rem;padding:10px 16px;border-radius:999px;background:var(--bianco);box-shadow:0 6px 18px -12px rgba(46,36,34,.5)}
+
+/* ---------- Apertura ---------- */
+.apertura{position:relative;padding:118px 0 70px;overflow:hidden;background:
+  radial-gradient(120% 70% at 85% 10%,var(--cipria-chiara) 0,transparent 60%),
+  radial-gradient(90% 60% at 0% 100%,var(--salvia-chiara) 0,transparent 55%),var(--crema)}
+.apertura .contenitore{position:relative;display:grid;gap:34px}
+.bolla{position:absolute;border-radius:50%;filter:blur(2px);opacity:.55;pointer-events:none}
+.bolla.b1{width:180px;height:180px;background:var(--cipria);top:12%;right:-60px}
+.bolla.b2{width:110px;height:110px;background:var(--salvia-chiara);bottom:8%;left:-30px}
+.distintivo{display:inline-flex;align-items:center;gap:10px;padding:8px 14px 8px 10px;border-radius:999px;background:var(--bianco);font-size:.88rem;font-weight:700;box-shadow:0 8px 22px -14px rgba(46,36,34,.6)}
+.distintivo i{width:24px;height:24px;border-radius:50%;background:var(--wa);display:grid;place-items:center}
+.distintivo i svg{width:14px;height:14px}
+.apertura h1{font-size:clamp(2.7rem,12vw,5rem);margin:18px 0 16px}
+.apertura h1 .riga{display:block;overflow:hidden}
+.apertura h1 .riga span{display:inline-block}
+.apertura h1 em{font-style:italic;color:var(--terra)}
+.apertura .sottotitolo{font-size:1.1rem;margin-bottom:28px}
+.fiore-box{position:relative;width:min(340px,82vw);aspect-ratio:1;margin:0 auto}
+.fiore-box svg{width:100%;height:100%;overflow:visible}
+
+.cartellino{position:absolute;background:var(--bianco);border-radius:16px;padding:10px 14px;font-size:.85rem;font-weight:700;box-shadow:0 14px 30px -16px rgba(46,36,34,.55);display:flex;align-items:center;gap:8px}
+.cartellino svg{width:18px;height:18px;flex:none}
+.cartellino b{font-family:var(--titoli);font-size:1.1rem;color:var(--terra)}
+.cartellino.c1{top:6%;left:-4%}
+.cartellino.c2{bottom:8%;right:-4%}
+
+/* ---------- Striscia ---------- */
+.striscia{background:var(--cacao);color:var(--cipria-chiara);overflow:hidden;padding:16px 0}
+.nastro{display:flex;gap:40px;width:max-content;animation:scorri 32s linear infinite;font-family:var(--titoli);font-style:italic;font-size:1.25rem}
+.nastro span{display:inline-flex;align-items:center;gap:40px;white-space:nowrap}
+.nastro span::after{content:"";width:8px;height:8px;border-radius:60% 0 60% 0;background:var(--cipria);transform:rotate(45deg)}
+@keyframes scorri{to{transform:translateX(-50%)}}
+
+/* ---------- Numeri ---------- */
+.numeri{padding:44px 0;background:var(--bianco)}
+.numeri .contenitore{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center}
+.numero b{display:block;font-family:var(--titoli);font-size:clamp(2.2rem,9vw,3.2rem);font-weight:600;color:var(--terra);line-height:1}
+.numero span{display:block;margin-top:8px;font-size:.88rem;color:var(--grigio);line-height:1.35}
+
+/* ---------- Prenota (listino interattivo) ---------- */
+.prenota{background:var(--crema)}
+.schede{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 12px;margin:26px -20px 6px;padding-left:20px;padding-right:20px;scrollbar-width:none}
+.schede::-webkit-scrollbar{display:none}
+.scheda-btn{flex:none;padding:10px 18px;border-radius:999px;border:2px solid var(--bordo);background:var(--bianco);font-weight:800;font-size:.92rem;cursor:pointer;color:var(--cacao);transition:all .2s}
+.scheda-btn[aria-selected="true"]{background:var(--cacao);border-color:var(--cacao);color:var(--crema)}
+.pren-griglia{display:grid;gap:22px}
+.listino{list-style:none;display:grid;gap:10px}
+.voce{display:flex;align-items:center;gap:14px;padding:16px;border-radius:18px;background:var(--bianco);border:2px solid transparent;cursor:pointer;transition:border-color .2s,transform .2s,background .2s;user-select:none}
+.voce:hover{transform:translateY(-2px)}
+.voce:focus-visible{outline:3px solid var(--terra);outline-offset:2px}
+.voce .spunta{width:28px;height:28px;flex:none;border-radius:50%;border:2px solid var(--bordo);display:grid;place-items:center;transition:all .2s}
+.voce .spunta svg{width:14px;height:14px;opacity:0;transition:opacity .2s}
+.voce .info{flex:1;min-width:0}
+.voce h3{font-family:var(--sans);font-weight:800;font-size:1rem;letter-spacing:0;line-height:1.25}
+.voce p{font-size:.86rem;color:var(--grigio);margin-top:2px}
+.voce .prezzo{font-family:var(--titoli);font-weight:600;font-size:1.2rem;white-space:nowrap}
+.voce[aria-checked="true"]{border-color:var(--terra);background:#FFF9F6}
+.voce[aria-checked="true"] .spunta{background:var(--terra);border-color:var(--terra)}
+.voce[aria-checked="true"] .spunta svg{opacity:1}
+.riepilogo{background:var(--cacao);color:var(--crema);border-radius:var(--raggio);padding:22px;position:relative;overflow:hidden}
+.riepilogo::after{content:"";position:absolute;width:160px;height:160px;border-radius:50%;background:var(--terra);opacity:.25;top:-60px;right:-50px}
+.riepilogo .etichetta{color:var(--cipria)}
+.riepilogo h3{font-size:1.7rem;margin:10px 0 4px}
+.totali{display:flex;gap:18px;margin:14px 0 18px;font-size:.9rem;color:#D8CCC4}
+.totali b{display:block;font-family:var(--titoli);font-size:1.5rem;color:#fff;font-weight:600}
+.scelta-titolo{font-size:.8rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#CBBDB4;margin:14px 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:9px 14px;border-radius:999px;border:1.5px solid rgba(247,240,232,.3);background:transparent;color:var(--crema);font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s}
+.chip[aria-pressed="true"]{background:var(--cipria);border-color:var(--cipria);color:var(--cacao)}
+.anteprima{margin:20px 0 16px;position:relative;z-index:1}
+.anteprima small{display:block;font-size:.78rem;color:#CBBDB4;margin-bottom:8px}
+.fumetto{background:#DCF8C6;color:#1D2A1F;border-radius:16px 16px 4px 16px;padding:12px 14px;font-size:.92rem;line-height:1.45;white-space:pre-line;min-height:70px;box-shadow:0 10px 22px -14px rgba(0,0,0,.6)}
+.riepilogo .bottone{width:100%;position:relative;z-index:1}
+.nota-prezzi{font-size:.8rem;color:#CBBDB4;margin-top:12px;position:relative;z-index:1}
+
+/* ---------- Passi ---------- */
+.passi{background:var(--bianco)}
+.percorso{display:grid;gap:16px;margin-top:30px}
+.passo{display:flex;gap:16px;align-items:flex-start;padding:20px;border-radius:var(--raggio);background:var(--crema)}
+.cerchio{width:48px;height:48px;flex:none;border-radius:50%;background:var(--cipria);display:grid;place-items:center;font-family:var(--titoli);font-weight:700;font-size:1.3rem;color:var(--cacao)}
+.passo h3{font-family:var(--sans);font-weight:800;font-size:1.08rem;letter-spacing:0;margin-bottom:4px}
+.passo p{color:var(--grigio);font-size:.95rem}
+.promessa{display:flex;gap:14px;align-items:center;margin-top:20px;padding:18px 20px;border-radius:var(--raggio);border:2px dashed var(--salvia);background:#F5F8F3}
+.promessa svg{width:40px;height:40px;flex:none}
+.promessa p{color:var(--grigio);font-size:.93rem}
+
+/* ---------- Orari ---------- */
+.orari-griglia{display:grid;gap:18px;margin-top:28px}
+.cartello{border-radius:var(--raggio);padding:24px;background:var(--cacao);color:var(--crema)}
+.cartello .grande{display:flex;align-items:center;gap:12px;font-family:var(--titoli);font-size:2rem;font-weight:600}
+.pallino{width:14px;height:14px;border-radius:50%;background:#9A8F8A;box-shadow:0 0 0 6px rgba(154,143,138,.2)}
+.cartello.aperto .pallino{background:#7BD389;box-shadow:0 0 0 6px rgba(123,211,137,.22);animation:pulsa 2s infinite}
+@keyframes pulsa{50%{box-shadow:0 0 0 11px rgba(123,211,137,0)}}
+.cartello .dettaglio{color:#CBBDB4;margin-top:6px}
+.cartello .suggerimento{margin-top:16px;font-size:.92rem;padding-top:14px;border-top:1px solid rgba(247,240,232,.15)}
+.tabella{list-style:none;background:var(--bianco);border-radius:var(--raggio);padding:8px 20px}
+.tabella li{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--bordo);font-weight:600}
+.tabella li:last-child{border-bottom:0}
+.tabella li.oggi{color:var(--terra);font-weight:800}
+.tabella li.chiuso span:last-child{color:var(--grigio);font-weight:500}
+
+/* ---------- Recensioni ---------- */
+.recensioni{background:var(--cipria-chiara)}
+.rec-box{margin-top:26px;border-radius:var(--raggio);background:var(--bianco);padding:26px;border:2px dashed var(--terra);display:grid;gap:16px}
+.stelle{display:flex;gap:4px}
+.stelle svg{width:26px;height:26px}
+.rec-box h3{font-size:1.5rem}
+.rec-box p{color:var(--grigio)}
+.rec-segnaposto{display:grid;gap:10px}
+.rec-segnaposto div{height:14px;border-radius:999px;background:var(--crema-2)}
+.rec-segnaposto div:nth-child(2){width:80%}
+.rec-segnaposto div:nth-child(3){width:55%}
+
+/* ---------- Dove ---------- */
+.dove-griglia{display:grid;gap:20px;margin-top:28px}
+.mappa{border-radius:var(--raggio);overflow:hidden;background:var(--crema-2)}
+.scheda-dove{border-radius:var(--raggio);background:var(--bianco);padding:24px}
+.scheda-dove h3{font-size:1.6rem;margin-bottom:8px}
+.scheda-dove address{font-style:normal;color:var(--grigio);margin-bottom:12px}
+.scheda-dove .tel{display:inline-block;font-family:var(--titoli);font-size:1.6rem;font-weight:600;text-decoration:none;margin-bottom:18px;color:var(--terra)}
+.dettagli{list-style:none;display:grid;gap:8px;margin-top:18px;font-size:.92rem;color:var(--grigio)}
+.dettagli li{display:flex;gap:10px;align-items:center}
+.dettagli li::before{content:"";width:8px;height:8px;border-radius:60% 0 60% 0;background:var(--salvia);transform:rotate(45deg);flex:none}
+
+/* ---------- Footer ---------- */
+footer{background:var(--cacao);color:#CBBDB4;padding:48px 0 120px;text-align:center;font-size:.9rem}
+footer .logo{justify-content:center;color:var(--crema);margin-bottom:12px}
+footer .dimostrativo{display:inline-block;margin-top:22px;padding:8px 16px;border:1px dashed rgba(203,189,180,.5);border-radius:999px;font-size:.8rem}
+
+/* ---------- Barra fissa ---------- */
+.barra-fissa{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:rgba(247,240,232,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--bordo);transform:translateY(110%);transition:transform .35s}
+.barra-fissa.visibile{transform:none}
+.barra-fissa .bottone{flex:1;min-height:52px;padding:0 12px}
+
+.compare{opacity:1}
+
+@media (min-width:760px){
+  .menu{display:flex}
+  .apertura{padding:150px 0 100px}
+  .apertura .contenitore{grid-template-columns:1.15fr .85fr;align-items:center}
+  .pren-griglia{grid-template-columns:1.2fr .8fr;align-items:start}
+  .riepilogo{position:sticky;top:20px}
+  .percorso{grid-template-columns:repeat(3,1fr)}
+  .passo{flex-direction:column}
+  .orari-griglia,.dove-griglia{grid-template-columns:1fr 1fr;align-items:stretch}
+  .rec-box{grid-template-columns:auto 1fr;align-items:center;gap:28px}
+  .barra-fissa{display:none}
+  footer{padding-bottom:48px}
+}
+@media (prefers-reduced-motion:reduce){
+  .nastro{animation:none}
+  .cartello.aperto .pallino{animation:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<header class="testata">
+  <div class="contenitore">
+    <a class="logo" href="#">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><g fill="#B4574A"><path d="M20 4c5 5 5 11 0 16-5-5-5-11 0-16z"/><path d="M20 36c-5-5-5-11 0-16 5 5 5 11 0 16z" opacity=".55"/><path d="M4 20c5-5 11-5 16 0-5 5-11 5-16 0z" opacity=".75"/><path d="M36 20c-5 5-11 5-16 0 5-5 11-5 16 0z" opacity=".75"/></g><circle cx="20" cy="20" r="3.4" fill="#2E2422"/></svg>
+      Petalo
+    </a>
+    <nav class="menu" aria-label="Menu">
+      <a href="#prenota">Trattamenti</a><a href="#orari">Orari</a><a href="#dove">Dove siamo</a>
+    </nav>
+    <a class="tel-piccolo" href="tel:+390200000000">02 0000 0000</a>
+  </div>
+</header>
+
+<main>
+  <!-- APERTURA -->
+  <section class="apertura">
+    <span class="bolla b1" aria-hidden="true"></span>
+    <span class="bolla b2" aria-hidden="true"></span>
+    <div class="contenitore">
+      <div>
+        <span class="distintivo compare"><i><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg></i>Prenoti direttamente con noi, su WhatsApp</span>
+        <h1>
+          <span class="riga"><span>Il tuo momento,</span></span>
+          <span class="riga"><span><em>prenotato</em> in un</span></span>
+          <span class="riga"><span>messaggio.</span></span>
+        </h1>
+        <p class="sottotitolo compare">Viso, mani, corpo e cerette nel centro estetico sotto casa. Scegli i trattamenti qui sotto: il messaggio per prenotare si scrive da solo.</p>
+        <div class="azioni compare">
+          <a class="bottone terra" href="#prenota">Scegli i trattamenti</a>
+          <a class="bottone chiaro" href="tel:+390200000000">Chiama</a>
+        </div>
+      </div>
+      <div class="fiore-box" aria-hidden="true">
+        <svg viewBox="0 0 400 400" data-fiore>
+          <circle cx="200" cy="200" r="170" fill="#FFFFFF" opacity=".6"/>
+          <g>
+            <g transform="rotate(0 200 200)"><path class="petalo" d="M200 200C160 150 168 78 200 40c32 38 40 110 0 160z" fill="#EBC3B3"/></g>
+            <g transform="rotate(60 200 200)"><path class="petalo" d="M200 200C160 150 168 78 200 40c32 38 40 110 0 160z" fill="#E4B19E"/></g>
+            <g transform="rotate(120 200 200)"><path class="petalo" d="M200 200C160 150 168 78 200 40c32 38 40 110 0 160z" fill="#EBC3B3"/></g>
+            <g transform="rotate(180 200 200)"><path class="petalo" d="M200 200C160 150 168 78 200 40c32 38 40 110 0 160z" fill="#E4B19E"/></g>
+            <g transform="rotate(240 200 200)"><path class="petalo" d="M200 200C160 150 168 78 200 40c32 38 40 110 0 160z" fill="#EBC3B3"/></g>
+            <g transform="rotate(300 200 200)"><path class="petalo" d="M200 200C160 150 168 78 200 40c32 38 40 110 0 160z" fill="#E4B19E"/></g>
+          </g>
+          <g data-foglie>
+            <path d="M200 200c40-10 70 4 92 30-34 10-70 2-92-30z" fill="#8DA287" opacity=".85" transform="rotate(30 200 200)"/>
+            <path d="M200 200c40-10 70 4 92 30-34 10-70 2-92-30z" fill="#8DA287" opacity=".7" transform="rotate(210 200 200)"/>
+          </g>
+          <circle cx="200" cy="200" r="34" fill="#B4574A" data-cuore/>
+          <circle cx="200" cy="200" r="14" fill="#2E2422"/>
+        </svg>
+        <div class="cartellino c1"><b>1</b> messaggio per prenotare</div>
+        <div class="cartellino c2"><svg width="18" height="18" viewBox="0 0 24 24" fill="#1F9D57" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>Nessuna app da scaricare</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRISCIA -->
+  <div class="striscia" aria-hidden="true">
+    <div class="nastro">
+      <span>Pulizia viso</span><span>Semipermanente</span><span>Pedicure</span><span>Massaggi</span><span>Cerette</span><span>Laminazione ciglia</span>
+      <span>Pulizia viso</span><span>Semipermanente</span><span>Pedicure</span><span>Massaggi</span><span>Cerette</span><span>Laminazione ciglia</span>
+    </div>
+  </div>
+
+  <!-- NUMERI -->
+  <section class="numeri" aria-label="In breve">
+    <div class="contenitore">
+      <div class="numero"><b data-conta="13">13</b><span>trattamenti<br>in listino</span></div>
+      <div class="numero"><b data-conta="5">5</b><span>giorni aperti<br>a settimana</span></div>
+      <div class="numero"><b data-conta="1">1</b><span>messaggio<br>per prenotare</span></div>
+    </div>
+  </section>
+
+  <!-- PRENOTA -->
+  <section id="prenota" class="prenota">
+    <div class="contenitore">
+      <span class="etichetta compare">Trattamenti e prezzi</span>
+      <h2 class="compare">Scegli cosa ti va, <em>al resto pensiamo noi.</em></h2>
+      <p class="sottotitolo compare">Tocca i trattamenti che vuoi fare, scegli giorno e momento: ti prepariamo il messaggio da mandarci su WhatsApp. Ti rispondiamo noi con l'orario libero.</p>
+
+      <div class="schede" role="tablist" aria-label="Categorie" data-schede></div>
+
+      <div class="pren-griglia">
+        <ul class="listino" data-listino aria-label="Trattamenti"></ul>
+
+        <aside class="riepilogo" aria-live="polite">
+          <span class="etichetta">Il tuo appuntamento</span>
+          <h3 data-riep-titolo>Nessun trattamento scelto</h3>
+          <div class="totali">
+            <div><b data-durata>0'</b>durata</div>
+            <div><b data-totale>0 €</b>indicativo</div>
+          </div>
+          <p class="scelta-titolo">Che giorno preferisci?</p>
+          <div class="chips" data-giorni></div>
+          <p class="scelta-titolo">In che momento?</p>
+          <div class="chips" data-fasce></div>
+          <div class="anteprima">
+            <small>Il messaggio che ci arriva</small>
+            <div class="fumetto" data-fumetto></div>
+          </div>
+          <a class="bottone wa" href="#" data-invia aria-disabled="true" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3 .78.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.25-.12-1.47-.72-1.7-.8-.23-.09-.4-.12-.56.12-.17.25-.65.8-.8.97-.14.16-.29.18-.54.06a6.7 6.7 0 0 1-3.3-2.9c-.25-.43.25-.4.71-1.33.08-.16.04-.3-.02-.42l-.76-1.83c-.2-.48-.4-.41-.56-.42h-.48a.92.92 0 0 0-.67.31 2.8 2.8 0 0 0-.87 2.08 4.9 4.9 0 0 0 1.02 2.58 11.1 11.1 0 0 0 4.26 3.77c1.6.69 2.22.75 3.02.63.49-.07 1.47-.6 1.68-1.18.2-.58.2-1.08.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
+            Manda su WhatsApp
+          </a>
+          <p class="nota-prezzi">Prezzi indicativi: il preventivo esatto te lo confermiamo noi in chat.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- COME FUNZIONA -->
+  <section class="passi">
+    <div class="contenitore">
+      <span class="etichetta compare">Come funziona</span>
+      <h2 class="compare">Prenotare è facile <em>come scrivere a un'amica.</em></h2>
+      <div class="percorso">
+        <div class="passo compare">
+          <div class="cerchio">1</div>
+          <div><h3>Scegli e scrivici</h3><p>Componi l'appuntamento qui sopra o scrivici come preferisci su WhatsApp.</p></div>
+        </div>
+        <div class="passo compare">
+          <div class="cerchio">2</div>
+          <div><h3>Ti confermiamo l'orario</h3><p>Ti rispondiamo con il primo orario libero nel giorno che hai scelto.</p></div>
+        </div>
+        <div class="passo compare">
+          <div class="cerchio">3</div>
+          <div><h3>Ti ricordiamo l'appuntamento</h3><p>Il giorno prima ti mandiamo un promemoria. Se hai un imprevisto, basta un messaggio.</p></div>
+        </div>
+      </div>
+      <div class="promessa compare">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#8DA287"/><path d="M12 20.5l5.2 5L28 14" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><b>Niente app, niente registrazioni</b><p>Scrivi direttamente a noi: nessun intermediario tra te e il centro.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORARI -->
+  <section id="orari">
+    <div class="contenitore">
+      <span class="etichetta compare">Orari</span>
+      <h2 class="compare">Quando ci trovi.</h2>
+      <p class="sottotitolo compare">Su WhatsApp puoi scriverci quando vuoi: ti rispondiamo appena siamo in cabina libera.</p>
+      <div class="orari-griglia">
+        <div class="cartello compare" data-cartello aria-live="polite">
+          <div class="grande"><i class="pallino"></i><span data-stato>…</span></div>
+          <p class="dettaglio" data-dettaglio>Sto controllando l'orario</p>
+          <p class="suggerimento" data-suggerimento></p>
+        </div>
+        <ul class="tabella compare" data-tabella></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECENSIONI -->
+  <section class="recensioni">
+    <div class="contenitore">
+      <span class="etichetta compare">Recensioni</span>
+      <h2 class="compare">Cosa dicono <em>le clienti.</em></h2>
+      <div class="rec-box compare">
+        <div>
+          <div class="stelle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="#B4574A"><path d="m12 2 3 6.6 7 .7-5.3 4.8 1.6 7L12 17.5 5.7 21l1.6-7L2 9.3l7-.7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#B4574A"><path d="m12 2 3 6.6 7 .7-5.3 4.8 1.6 7L12 17.5 5.7 21l1.6-7L2 9.3l7-.7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#B4574A"><path d="m12 2 3 6.6 7 .7-5.3 4.8 1.6 7L12 17.5 5.7 21l1.6-7L2 9.3l7-.7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#B4574A"><path d="m12 2 3 6.6 7 .7-5.3 4.8 1.6 7L12 17.5 5.7 21l1.6-7L2 9.3l7-.7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#B4574A"><path d="m12 2 3 6.6 7 .7-5.3 4.8 1.6 7L12 17.5 5.7 21l1.6-7L2 9.3l7-.7z"/></svg>
+          </div>
+        </div>
+        <div>
+          <h3>Qui vanno le recensioni Google del centro</h3>
+          <p>Questo è un esempio con un'attività inventata, quindi non ci sono recensioni vere. Nel sito di un centro reale qui compaiono le sue recensioni di Google, con il voto medio e il link per leggerle tutte.</p>
+          <div class="rec-segnaposto" aria-hidden="true" style="margin-top:14px"><div></div><div></div><div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOVE -->
+  <section id="dove">
+    <div class="contenitore">
+      <span class="etichetta compare">Dove siamo</span>
+      <h2 class="compare">Sotto casa, <em>a due passi dalla piazza.</em></h2>
+      <div class="dove-griglia">
+        <div class="mappa compare">
+          <svg viewBox="0 0 400 300" role="img" aria-label="Mappa disegnata: il centro Petalo in via dei Petali Inventati, vicino a Piazza Immaginaria e al parcheggio">
+            <rect width="400" height="300" fill="#EFE4D8"/>
+            <g fill="#E4D6C9">
+              <rect x="20" y="20" width="110" height="80" rx="10"/><rect x="160" y="20" width="90" height="80" rx="10"/><rect x="280" y="20" width="100" height="80" rx="10"/>
+              <rect x="20" y="130" width="110" height="60" rx="10"/><rect x="280" y="130" width="100" height="60" rx="10"/>
+              <rect x="20" y="220" width="160" height="60" rx="10"/><rect x="210" y="220" width="170" height="60" rx="10"/>
+            </g>
+            <circle cx="205" cy="160" r="34" fill="#DCE5D7"/>
+            <circle cx="205" cy="160" r="10" fill="#8DA287"/>
+            <text x="205" y="205" text-anchor="middle" font-family="Manrope,sans-serif" font-size="10" font-weight="700" fill="#6E625E">Piazza Immaginaria</text>
+            <rect x="300" y="145" width="60" height="30" rx="6" fill="#FFFFFF"/>
+            <text x="330" y="165" text-anchor="middle" font-family="Manrope,sans-serif" font-size="12" font-weight="800" fill="#2E2422">P</text>
+            <path d="M205 160 C 240 150 250 110 300 110" fill="none" stroke="#B4574A" stroke-width="3" stroke-dasharray="6 6" stroke-linecap="round" data-percorso/>
+            <g data-pin transform="translate(300 110)">
+              <circle r="20" fill="#B4574A"/>
+              <g fill="#F6DFD5"><path d="M0-12c3 3 3 7 0 10-3-3-3-7 0-10z"/><path d="M0 12c-3-3-3-7 0-10 3 3 3 7 0 10z"/><path d="M-12 0c3-3 7-3 10 0-3 3-7 3-10 0z"/><path d="M12 0c-3 3-7 3-10 0 3-3 7-3 10 0z"/></g>
+            </g>
+            <text x="300" y="80" text-anchor="middle" font-family="Fraunces,serif" font-size="14" font-weight="700" fill="#2E2422">Petalo</text>
+          </svg>
+        </div>
+        <div class="scheda-dove compare">
+          <h3>Petalo · Estetica e benessere</h3>
+          <address>Via dei Petali Inventati 8<br>20000 Borgofinto sul Naviglio (MI)</address>
+          <a class="tel" href="tel:+390200000000">02 0000 0000</a>
+          <div class="azioni">
+            <a class="bottone wa" href="https://wa.me/390000000000?text=Ciao!%20Vorrei%20prenotare%20un%20appuntamento" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3 .78.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+              WhatsApp
+            </a>
+            <a class="bottone chiaro" href="tel:+390200000000">Chiama</a>
+          </div>
+          <ul class="dettagli">
+            <li>Parcheggio a 2 minuti a piedi</li>
+            <li>Ingresso al piano strada</li>
+            <li>Pagamento anche con carta</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="contenitore">
+    <div class="logo">Petalo</div>
+    <p>Via dei Petali Inventati 8 · Borgofinto sul Naviglio (MI)<br>Tel. 02 0000 0000 · P. IVA 00000000000</p>
+    <p class="dimostrativo">Progetto dimostrativo – attività di fantasia</p>
+  </div>
+</footer>
+
+<div class="barra-fissa" data-barra>
+  <a class="bottone terra" href="#prenota">Prenota</a>
+  <a class="bottone wa" href="https://wa.me/390000000000?text=Ciao!%20Vorrei%20prenotare%20un%20appuntamento" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3 .78.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+    WhatsApp
+  </a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var NUMERO_WA = "390000000000";
+
+  /* ---------- Listino ---------- */
+  var categorie = [
+    {id:"viso", nome:"Viso"},
+    {id:"mani", nome:"Mani e piedi"},
+    {id:"corpo", nome:"Corpo"},
+    {id:"ceretta", nome:"Ceretta"},
+    {id:"sguardo", nome:"Ciglia e sopracciglia"}
+  ];
+  var trattamenti = [
+    {id:"t1", cat:"viso", nome:"Pulizia viso", desc:"Detersione profonda e maschera", min:60, euro:50},
+    {id:"t2", cat:"viso", nome:"Trattamento idratante", desc:"Per pelle secca o spenta", min:50, euro:45},
+    {id:"t3", cat:"viso", nome:"Viso rassodante", desc:"Massaggio e siero mirato", min:70, euro:65},
+    {id:"t4", cat:"mani", nome:"Manicure", desc:"Cura delle unghie e smalto", min:40, euro:22},
+    {id:"t5", cat:"mani", nome:"Semipermanente mani", desc:"Dura fino a tre settimane", min:50, euro:30},
+    {id:"t6", cat:"mani", nome:"Pedicure curativo", desc:"Piedi morbidi e curati", min:50, euro:35},
+    {id:"t7", cat:"corpo", nome:"Massaggio rilassante", desc:"Schiena, collo e spalle", min:50, euro:45},
+    {id:"t8", cat:"corpo", nome:"Massaggio drenante", desc:"Gambe leggere", min:50, euro:50},
+    {id:"t9", cat:"ceretta", nome:"Gamba intera", desc:"Cera tiepida o a caldo", min:40, euro:28},
+    {id:"t10", cat:"ceretta", nome:"Mezza gamba", desc:"Dal ginocchio in giù", min:25, euro:16},
+    {id:"t11", cat:"ceretta", nome:"Inguine", desc:"Delicata e veloce", min:15, euro:12},
+    {id:"t12", cat:"sguardo", nome:"Laminazione ciglia", desc:"Ciglia curve per settimane", min:50, euro:45},
+    {id:"t13", cat:"sguardo", nome:"Sopracciglia", desc:"Forma e definizione", min:15, euro:10}
+  ];
+  var giorni = ["Martedì","Mercoledì","Giovedì","Venerdì","Sabato"];
+  var fasce = ["Mattina","Pomeriggio","Indifferente"];
+  var scelti = {}, giornoScelto = null, fasciaScelta = "Indifferente", catAttiva = "viso";
+
+  var elSchede = document.querySelector("[data-schede]");
+  var elListino = document.querySelector("[data-listino]");
+  var spunta = '<svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  categorie.forEach(function(c){
+    var b = document.createElement("button");
+    b.className = "scheda-btn"; b.type = "button"; b.setAttribute("role","tab");
+    b.textContent = c.nome; b.dataset.cat = c.id;
+    b.setAttribute("aria-selected", c.id === catAttiva ? "true" : "false");
+    b.addEventListener("click", function(){ catAttiva = c.id; disegnaSchede(); disegnaListino(true); });
+    elSchede.appendChild(b);
+  });
+  function disegnaSchede(){
+    elSchede.querySelectorAll(".scheda-btn").forEach(function(b){ b.setAttribute("aria-selected", b.dataset.cat === catAttiva ? "true" : "false"); });
+  }
+  function disegnaListino(anima){
+    elListino.innerHTML = "";
+    trattamenti.filter(function(t){ return t.cat === catAttiva; }).forEach(function(t){
+      var li = document.createElement("li");
+      li.className = "voce"; li.tabIndex = 0; li.setAttribute("role","checkbox");
+      li.setAttribute("aria-checked", scelti[t.id] ? "true" : "false");
+      li.innerHTML = '<span class="spunta">'+spunta+'</span><div class="info"><h3>'+t.nome+'</h3><p>'+t.desc+' · '+t.min+' min</p></div><span class="prezzo">'+t.euro+' €</span>';
+      function cambia(){
+        if (scelti[t.id]) delete scelti[t.id]; else scelti[t.id] = true;
+        li.setAttribute("aria-checked", scelti[t.id] ? "true" : "false");
+        if (window.gsap && !ridotto) gsap.fromTo(li.querySelector(".spunta"),{scale:.6},{scale:1,duration:.4,ease:"back.out(3)"});
+        aggiorna();
+      }
+      li.addEventListener("click", cambia);
+      li.addEventListener("keydown", function(e){ if (e.key === " " || e.key === "Enter"){ e.preventDefault(); cambia(); } });
+      elListino.appendChild(li);
+    });
+    if (anima && window.gsap && !ridotto) gsap.from(elListino.children,{y:14,opacity:0,duration:.35,stagger:.05,ease:"power2.out"});
+  }
+
+  function creaChips(sel, valori, getter, setter){
+    var box = document.querySelector(sel);
+    valori.forEach(function(v){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "chip"; b.textContent = v;
+      b.addEventListener("click", function(){ setter(getter() === v && sel === "[data-giorni]" ? null : v); segna(); aggiorna(); });
+      box.appendChild(b);
+    });
+    function segna(){ box.querySelectorAll(".chip").forEach(function(b){ b.setAttribute("aria-pressed", b.textContent === getter() ? "true" : "false"); }); }
+    segna();
+  }
+  creaChips("[data-giorni]", giorni, function(){ return giornoScelto; }, function(v){ giornoScelto = v; });
+  creaChips("[data-fasce]", fasce, function(){ return fasciaScelta; }, function(v){ fasciaScelta = v; });
+
+  var elTitolo = document.querySelector("[data-riep-titolo]"), elDurata = document.querySelector("[data-durata]"),
+      elTotale = document.querySelector("[data-totale]"), elFumetto = document.querySelector("[data-fumetto]"),
+      elInvia = document.querySelector("[data-invia]");
+  var totPrec = 0;
+
+  function aggiorna(){
+    var lista = trattamenti.filter(function(t){ return scelti[t.id]; });
+    var min = lista.reduce(function(s,t){ return s + t.min; }, 0);
+    var euro = lista.reduce(function(s,t){ return s + t.euro; }, 0);
+    elTitolo.textContent = lista.length === 0 ? "Nessun trattamento scelto" : (lista.length === 1 ? "1 trattamento" : lista.length + " trattamenti");
+    var ore = Math.floor(min/60), resto = min % 60;
+    elDurata.textContent = min === 0 ? "0'" : (ore ? ore + "h" + (resto ? " " + resto + "'" : "") : resto + "'");
+    if (window.gsap && !ridotto){
+      var o = {v: totPrec};
+      gsap.to(o,{v:euro,duration:.5,ease:"power2.out",onUpdate:function(){ elTotale.textContent = Math.round(o.v) + " €"; }});
+    } else { elTotale.textContent = euro + " €"; }
+    totPrec = euro;
+
+    var testo;
+    if (lista.length === 0){
+      testo = "Scegli almeno un trattamento e qui compare il messaggio da mandarci.";
+      elInvia.setAttribute("aria-disabled","true"); elInvia.href = "#";
+    } else {
+      testo = "Ciao! Vorrei prenotare:\n" + lista.map(function(t){ return "• " + t.nome; }).join("\n");
+      if (giornoScelto) testo += "\nGiorno: " + giornoScelto.toLowerCase();
+      if (fasciaScelta && fasciaScelta !== "Indifferente") testo += (giornoScelto ? ", " : "\nMomento: ") + fasciaScelta.toLowerCase();
+      testo += "\nGrazie!";
+      elInvia.removeAttribute("aria-disabled");
+      elInvia.href = "https://wa.me/" + NUMERO_WA + "?text=" + encodeURIComponent(testo);
+    }
+    elFumetto.textContent = testo;
+  }
+  elInvia.addEventListener("click", function(e){ if (elInvia.getAttribute("aria-disabled") === "true") e.preventDefault(); });
+
+  /* ---------- Orari ---------- */
+  var orari = [
+    null,                       // domenica
+    null,                       // lunedì
+    [[9.5,13],[14.5,19.5]],     // martedì
+    [[9.5,13],[14.5,19.5]],
+    [[9.5,13],[14.5,21]],       // giovedì sera lunga
+    [[9.5,13],[14.5,19.5]],
+    [[9,18]]                    // sabato orario continuato
+  ];
+  var nomiGiorni = ["Domenica","Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato"];
+  function hhmm(h){ var hh = Math.floor(h), mm = Math.round((h - hh) * 60); return hh + ":" + (mm < 10 ? "0" : "") + mm; }
+  function testoGiorno(f){ return f ? f.map(function(x){ return hhmm(x[0]) + "–" + hhmm(x[1]); }).join(" · ") : "Chiuso"; }
+  var ora = new Date(), g = ora.getDay(), h = ora.getHours() + ora.getMinutes()/60;
+  var tab = document.querySelector("[data-tabella]");
+  [2,3,4,5,6,0,1].forEach(function(i){
+    var li = document.createElement("li");
+    if (i === g) li.className = "oggi";
+    if (!orari[i]) li.className += " chiuso";
+    li.innerHTML = "<span>" + nomiGiorni[i] + (i === g ? " (oggi)" : "") + "</span><span>" + testoGiorno(orari[i]) + "</span>";
+    tab.appendChild(li);
+  });
+  var cart = document.querySelector("[data-cartello]"), stato = document.querySelector("[data-stato]"),
+      dett = document.querySelector("[data-dettaglio]"), sugg = document.querySelector("[data-suggerimento]");
+  var oggi = orari[g], aperto = false, chiude = null, prossima = null;
+  if (oggi) oggi.forEach(function(f){ if (h >= f[0] && h < f[1]){ aperto = true; chiude = f[1]; } if (prossima === null && h < f[0]) prossima = f[0]; });
+  if (aperto){
+    cart.classList.add("aperto"); stato.textContent = "Aperto ora";
+    dett.textContent = "Fino alle " + hhmm(chiude) + ". Scrivici per sapere se c'è posto oggi.";
+  } else {
+    stato.textContent = "Ora chiuso";
+    if (prossima !== null) dett.textContent = "Riapriamo oggi alle " + hhmm(prossima) + ".";
+    else {
+      var k = 1; while (k < 8 && !orari[(g + k) % 7]) k++;
+      var gg = (g + k) % 7;
+      dett.textContent = "Riapriamo " + (k === 1 ? "domani" : nomiGiorni[gg].toLowerCase()) + " alle " + hhmm(orari[gg][0][0]) + ".";
+    }
+  }
+  sugg.innerHTML = "<b>Il giovedì siamo aperti fino alle 21</b>, comodo se lavori.";
+
+  /* ---------- Barra fissa ---------- */
+  var barra = document.querySelector("[data-barra]");
+  window.addEventListener("scroll", function(){ barra.classList.toggle("visibile", window.scrollY > 500); }, {passive:true});
+
+  /* ---------- Animazioni ---------- */
+  var ridotto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  disegnaListino(false); aggiorna();
+  if (!window.gsap || ridotto) return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  var tl = gsap.timeline({defaults:{ease:"power3.out"}});
+  tl.from(".apertura h1 .riga span",{yPercent:110,duration:.9,stagger:.12})
+    .from(".apertura .distintivo",{y:-14,opacity:0,duration:.5},0)
+    .from(".apertura .sottotitolo, .apertura .azioni",{y:18,opacity:0,duration:.6,stagger:.1},.45)
+    .from("[data-fiore] .petalo",{scale:0,opacity:0,svgOrigin:"200 200",duration:1.1,stagger:.08,ease:"back.out(1.6)"},.2)
+    .from("[data-foglie] path",{scale:0,svgOrigin:"200 200",duration:.8,stagger:.15},.7)
+    .from("[data-cuore]",{scale:0,svgOrigin:"200 200",duration:.6,ease:"back.out(3)"},.9)
+    .from(".cartellino",{y:16,opacity:0,duration:.5,stagger:.15},1.1);
+  gsap.to("[data-fiore]",{rotation:360,transformOrigin:"50% 50%",duration:90,repeat:-1,ease:"none"});
+  gsap.to(".bolla.b1",{y:30,x:-16,duration:6,yoyo:true,repeat:-1,ease:"sine.inOut"});
+  gsap.to(".bolla.b2",{y:-24,x:18,duration:7,yoyo:true,repeat:-1,ease:"sine.inOut"});
+
+  document.querySelectorAll("section:not(.apertura) .compare").forEach(function(el){
+    gsap.from(el,{y:28,opacity:0,duration:.75,ease:"power2.out",scrollTrigger:{trigger:el,start:"top 88%"}});
+  });
+  document.querySelectorAll("[data-conta]").forEach(function(el){
+    var fine = +el.dataset.conta, o = {v:0};
+    gsap.to(o,{v:fine,duration:1.3,ease:"power2.out",scrollTrigger:{trigger:el,start:"top 90%"},onUpdate:function(){ el.textContent = Math.round(o.v); }});
+  });
+  var perc = document.querySelector("[data-percorso]");
+  if (perc){
+    gsap.fromTo(perc,{strokeDashoffset:200},{strokeDashoffset:0,duration:2,ease:"none",scrollTrigger:{trigger:perc,start:"top 85%"}});
+    gsap.from("[data-pin]",{scale:0,transformOrigin:"center",duration:.6,ease:"back.out(3)",scrollTrigger:{trigger:perc,start:"top 85%"},delay:.6});
+  }
+})();
+</script>
+</body>
+</html>
